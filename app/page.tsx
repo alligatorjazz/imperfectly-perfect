@@ -1,16 +1,10 @@
-import Image from "next/image";
+import { Metadata } from "next"
 
-export default function Home() {
-	return (
-		<main className="flex min-h-screen flex-col items-center justify-between p-24">
-			<Image
-				className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-				src="/img/logo.svg"
-				alt="The Perfectly Imperfect logo."
-				width={180}
-				height={37}
-				priority
-			/>
-		</main>
-	);
+export const metadata: Metadata = {
+	title: 'Home',
+	description: 'Welcome to Next.js',
+}
+
+export default function Index() {
+	return <h1 className="text-primary">Hello world!</h1>
 }
