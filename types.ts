@@ -31,3 +31,21 @@ export type Editorial = {
 	coverUrl: string,
 	accountId: string
 }
+
+export type ProfileTheme = {
+	background?: string,
+	text?: string,
+	primary?: string,
+	secondary?: string,
+	tertiary?: string
+}
+
+export type UserAccount = {
+	id: string,
+	username: string,
+	displayName: string,
+	followingIds: string[],
+	blockedIds: string[],
+	joinedAt: string,
+	theme: ProfileTheme
+}

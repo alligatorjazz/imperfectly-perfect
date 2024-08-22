@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Emoji } from "emoji-type";
-import { Editorial, UserPost } from "./types";
+import { Editorial, UserAccount, UserPost } from "./types";
 
 export const dummyPosts: UserPost[] = [];
 for (let i = 0; i < 50; i++) {
@@ -23,4 +23,17 @@ for (let i = 0; i < 20; i++) {
 		coverUrl: faker.image.urlPlaceholder({ width: 128, height: 128 }),
 		accountId: crypto.randomUUID()
 	});
+}
+
+export const dummyUsers: UserAccount[] = []
+for (let i = 0; i < 100; i++) {
+	dummyUsers.push({
+		id: crypto.randomUUID(),
+		username: faker.word.words(2).split(" ").join(""),
+		displayName: faker.person.firstName(),
+		followingIds: [],
+		blockedIds: [],
+		joinedAt: faker.date.past({ years: 1 }).toISOString(),
+		theme: {}
+	})
 }

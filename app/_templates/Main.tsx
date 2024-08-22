@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import "../globals.css";
 import { NavLinks } from '../../types';
 import { HTMLAttributes } from 'react';
+import { globalNavLinks } from '../_nav';
 
 const arialNarrow = localFont({
 	src: [
@@ -29,12 +30,6 @@ const arialNarrow = localFont({
 	],
 });
 
-const globalNavLinks: NavLinks = [
-	{ href: "/home", title: "Home" },
-	{ href: "/editorial", title: "Editorial" },
-	{ href: "https://apps.apple.com/us/app/pi-fyi-by-perfectly-imperfect/id6474037926", title: "The PI.FYI App" },
-	{ href: "/browse", title: "Browse" }
-];
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 
