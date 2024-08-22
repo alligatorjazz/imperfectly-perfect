@@ -3,7 +3,13 @@
 @tailwind utilities;
 
 :root {
-
+	--primary-color: rgb(0, 4, 255);
+	--secondary-color: rgb(255, 187, 0);
+	--tertiary-color: rgb(222, 0, 0);
+	--bg-color: white;
+	--fg-color: rgb(226, 232, 240);
+	--text-color: black;
+	--accent: rgb(255, 255, 0);
 }
 
 @media (prefers-color-scheme: dark) {

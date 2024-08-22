@@ -2,22 +2,23 @@
 import { Logo } from "./Logo";
 import { FiMenu } from "react-icons/fi";
 import { NavDrawer } from "./NavDrawer";
-import { useState } from "react";
+import { HTMLAttributes, useState } from "react";
 import { NavLinks } from "../types";
 
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
 	links: NavLinks
 }
 
-export function Navbar({ links }: Props) {
+export function Navbar({ links, className }: Props) {
 	const [drawerActive, setDrawerActive] = useState(false);
 
 	return (<>
 		<header className={[
 			"w-full flex justify-between",
 			"px-3 py-5",
-			"border-b border-dashed border-b-textColor"
+			"border-b border-dashed border-b-textColor",
+			className
 		].join(" ")}>
 			<div className="hover:cursor-pointer" onClick={() => setDrawerActive(prev => !prev)}>
 				<FiMenu size={20} />

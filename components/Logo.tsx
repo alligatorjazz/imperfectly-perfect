@@ -1,10 +1,10 @@
 import { HTMLAttributes } from "react";
 
-export function Logo(props: HTMLAttributes<HTMLDivElement> & { scale?: number }) {
+export function Logo(props: HTMLAttributes<HTMLDivElement> & { scale?: number}) {
 	return (
 		<div {...props}>
 			<svg xmlns="http://www.w3.org/2000/svg" id="logo-horizontal_svg__Layer_2" data-name="Layer 2"
-				viewBox="0 0 10875.41 1394.37" width={172 * (props.scale ?? 1)} height={25 * (props.scale ?? 1)} fill="blue">
+				viewBox="0 0 10875.41 1394.37" width={172 * (props.scale ?? 1)} height={25 * (props.scale ?? 1)} fill={"var(--primary-color)"}>
 				<defs>
 					<style>{".logo-horizontal_svg__cls-1{stroke-width:0}"}</style>
 				</defs>

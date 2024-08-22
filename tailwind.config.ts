@@ -14,12 +14,13 @@ const config: Config = {
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
 			colors: {
-				"primary": "rgb(0, 4, 255)",
-				"secondary": "rgb(255, 187, 0)",
-				"tertiary": "rgb(222, 0, 0)",
-				"bgColor": "white",
-				"fgColor": "rgb(226, 232, 240)",
-				"textColor": "black"
+				"primary": "var(--primary-color)",
+				"secondary": "var(--secondary-color)",
+				"tertiary": "var(--tertiary-color)",
+				"bgColor": "var(--bg-color)",
+				"fgColor": "var(--fg-color)",
+				"textColor": "var(--text-color)",
+				"accent": "var(--accent-color)",
 			},
 			fontFamily: {
 				"default": '"Arial Narrow", sans-serif',
