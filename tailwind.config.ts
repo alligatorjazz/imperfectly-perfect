@@ -24,9 +24,11 @@ const config: Config = {
 			fontFamily: {
 				"default": '"Arial Narrow", sans-serif'
 			},
-			
+
 		}
 	},
-	plugins: [],
+	plugins: [
+		require("@designbycode/tailwindcss-text-stroke")
+	],
 };
 export default config;
