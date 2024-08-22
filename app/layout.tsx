@@ -30,7 +30,7 @@ const arialNarrow = localFont({
 });
 
 const globalNavLinks: NavLinks = [
-	{ href: "/", title: "Home" },
+	{ href: "/home", title: "Home" },
 	{ href: "https://apps.apple.com/us/app/pi-fyi-by-perfectly-imperfect/id6474037926", title: "The PI.FYI App" }
 ];
 
@@ -45,7 +45,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={arialNarrow.className}>
 				<Navbar links={globalNavLinks} />
-				<main>{children}</main>
+				<div>{children}</div>
 			</body>
 		</html>
 	);

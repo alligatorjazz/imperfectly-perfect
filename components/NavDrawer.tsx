@@ -29,6 +29,7 @@ export function NavDrawer({ active, setActive, links }: Props) {
 					<Link
 						key={href}
 						href={href}
+						onClick={() => setActive(false)}
 						className={isExternalURL(href) ? "text-primary opacity-50 hover:opacity-100" : "hover:text-primary"}
 					>
 						{title}
