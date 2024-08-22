@@ -10,7 +10,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 export function UserCard({ user }: Props) {
 	return (
-		<a href="/404">
+		<a href="/profile">
 			<div className="flex flex-col gap-2 border border-dashed border-textColor p-4 w-48">
 				<a href="/404" className="text-center"><Header level={1} className="text-xl whitespace-nowrap overflow-hidden overflow-ellipsis w-full">@{user.username}</Header></a>
 				{/* TODO: add getRecs function */}

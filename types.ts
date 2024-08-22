@@ -2,14 +2,16 @@ import { Emoji } from "emoji-type";
 
 export type NavLinks = { href: string, title: string }[]
 export type UserPost = {
+	id: string,
 	headline: string,
 	body?: string,
 	image?: string
 	link?: string
 	emoji?: Emoji
 	timestamp: string,
-	authorId: string
-}
+	authorId: string,
+	reRec: false
+} | { reRec: true, id: string, recommender: string }
 
 export const SortCategories = [
 	{ emoji: "⭐", title: "Everything" },
