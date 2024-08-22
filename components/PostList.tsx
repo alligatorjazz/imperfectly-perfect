@@ -3,6 +3,7 @@ import { UserPost } from "../types";
 import Image from "next/image";
 import { CommentsIcon } from "./CommentsIcon";
 import { faker } from "@faker-js/faker";
+import { IconButton } from "./IconButton";
 
 interface Props {
 	posts: UserPost[]
@@ -12,6 +13,7 @@ export function PostList({ posts }: Props) {
 	return (
 		<div className="flex flex-col gap-4">
 			{posts.map(post => {
+				const replies = Math.random() > 0.3 ? undefined : faker.number.int({ min: 1, max: 15 })
 				return (
 					<div className="flex flex-col border border-dashed border-textColor" key={post.timestamp + post.headline}>
 						{/* post content */}
@@ -41,13 +43,14 @@ export function PostList({ posts }: Props) {
 						</div>
 						{/* post actions */}
 						<div className="flex justify-between items-center border-t border-dashed border-textColor p-4 gap-4">
-							<div className="flex-1">
+							<IconButton tooltip="Remember this rec for later...">
 								<FiBookmark size={24} />
-							</div>
-							<div className="flex gap-1 font-bold text-xl">
-								{Math.random() > 0.3 ? "" : <p>{faker.number.int({ min: 1, max: 25 })}</p>}
+							</IconButton>
+							<div className="flex-1"></div>
+							<IconButton className="flex gap-1 font-bold text-xl" tooltip={replies ? replies + " replies" : undefined}>
+								{replies && <p>{replies}</p>}
 								<CommentsIcon />
-							</div>
+							</IconButton>
 							<Image
 								src={"/img/three-endorsed.avif"}
 								width={24}
