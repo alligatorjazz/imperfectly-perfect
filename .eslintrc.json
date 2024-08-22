@@ -1,6 +1,8 @@
 {
 	"extends": "next/core-web-vitals",
+	"plugins": ["react"],
 	"rules": {
-		"semi": "warn"
+		"semi": "warn",
+		"react/jsx-one-expression-per-line": ["error", {"allow": "single-child"}]
 	}
 }

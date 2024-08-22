@@ -9,10 +9,6 @@ export const metadata: Metadata = {
 
 export default function Index() {
 	return (
-		<div className="flex flex-col p-8">
-			<PostInput />
-			<Invites />
-			<WhatsHot />
-		</div>
+		<WhatsHot />
 	);
 }

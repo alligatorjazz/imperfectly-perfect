@@ -1,4 +1,6 @@
+import { Invites } from "../../components/Invites";
 import { LocalNav } from "../../components/LocalNav";
+import { PostInput } from "../../components/PostInput";
 import { NavLinks } from "../../types";
 import RootLayout from "../layout";
 
@@ -16,7 +18,11 @@ export default function HomeLayout({ children, }: {
 			<div className="border-b border-dashed border-textColor">
 				<LocalNav links={localLinks} />
 			</div>
-			{children}
+			<div className="flex flex-col p-8">
+				<PostInput />
+				<Invites />
+				{children}
+			</div>
 		</div>
 	);
 }

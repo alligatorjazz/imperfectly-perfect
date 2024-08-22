@@ -1,4 +1,4 @@
-import { Emoji } from "emoji-type"
+import { Emoji } from "emoji-type";
 
 export type NavLinks = { href: string, title: string }[]
 export type UserPost = {
@@ -10,3 +10,18 @@ export type UserPost = {
 	timestamp: string,
 	authorId: string
 }
+
+export const SortCategories = [
+	{ emoji: "⭐", title: "Everything" },
+	{ emoji: "🎵", title: "Music" },
+	{ emoji: "📽️", title: "Movies" },
+	{ emoji: "📚", title: "Books" },
+	{ emoji: "👕", title: "Clothes" },
+	{ emoji: "🍔", title: "Food & Drink" },
+	{ emoji: "📺", title: "Tv" },
+	{ emoji: "📹", title: "Videos" },
+	{ emoji: "🏛️", title: "Places" },
+	{ emoji: "🧠", title: "Random" }
+];
+
+

@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Button } from "../components/Button";
 
 export const metadata: Metadata = {
-	title: 'Index',
-	description: 'Welcome to Perfectly Imperfect.',
+	title: 'PI.FYI | Home',
+	description: "A Taste of YOUR Taste"
 };
 
 export default function Index() {
