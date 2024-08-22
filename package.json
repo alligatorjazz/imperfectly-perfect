@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@designbycode/tailwindcss-text-stroke": "^1.2.1",
+    "dayjs": "^1.11.13",
     "emoji-type": "^1.0.4",
     "next": "14.2.5",
     "react": "^18",

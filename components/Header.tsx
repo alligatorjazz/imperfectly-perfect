@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react";
 
 export function Header({ className, level, children, ...props }: HTMLAttributes<HTMLHeadingElement> & { level?: 1 | 2 | 3 | 4 | 5 | 6 }) {
-	const headerClasses = "font-bold  text-secondary uppercase text-stroke-1 text-stroke-tertiary";
+	const headerClasses = "font-bold text-secondary uppercase text-stroke-1 text-stroke-tertiary";
 	const fullClassName = [headerClasses, className].join(" ");
 	const headingLevel = level ?? 7;
 	switch (headingLevel) {

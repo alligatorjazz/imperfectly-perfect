@@ -23,8 +23,9 @@ const config: Config = {
 				"accent": "var(--accent-color)",
 			},
 			fontFamily: {
-				"default": '"Arial Narrow", sans-serif',
-				"content": '"Times New Roman", serif'
+				"primary": '"Arial Narrow", sans-serif',
+				"secondary": '"Arial", sans-serif',
+				"content": '"Times New Roman", serif',
 			},
 
 		}

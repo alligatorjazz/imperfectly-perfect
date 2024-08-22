@@ -2,5 +2,7 @@
   --primary-color: rgb(255, 255, 0);
   --bg-color: blue;
   --text-color: white;
+  --secondary-color: var(--primary-color);
+  --tertiary-color: red;
 }
  

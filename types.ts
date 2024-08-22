@@ -25,3 +25,9 @@ export const SortCategories = [
 ];
 
 
+export type Editorial = {
+	guest: string,
+	timestamp: string,
+	coverUrl: string,
+	accountId: string
+}
