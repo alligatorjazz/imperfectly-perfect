@@ -22,13 +22,16 @@ const config: Config = {
 				"textColor": "black"
 			},
 			fontFamily: {
-				"default": '"Arial Narrow", sans-serif'
+				"default": '"Arial Narrow", sans-serif',
+				"content": '"Times New Roman", serif'
 			},
 
 		}
 	},
 	plugins: [
-		require("@designbycode/tailwindcss-text-stroke")
+		require("@designbycode/tailwindcss-text-stroke"),
+		require('tailwind-scrollbar'),
+
 	],
 };
 export default config;
