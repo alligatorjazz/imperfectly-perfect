@@ -1,6 +1,8 @@
-import type { Metadata } from 'next'
-import { Navbar } from '../components/Navbar'
-import localFont from 'next/font/local'
+import type { Metadata } from 'next';
+import { Navbar } from '../components/Navbar';
+import localFont from 'next/font/local';
+import "./globals.css";
+import { NavLinks } from '../types';
 
 const arialNarrow = localFont({
 	src: [
@@ -25,7 +27,12 @@ const arialNarrow = localFont({
 			style: 'italic',
 		},
 	],
-})
+});
+
+const globalNavLinks: NavLinks = [
+	{ href: "/", title: "Home" },
+	{ href: "https://apps.apple.com/us/app/pi-fyi-by-perfectly-imperfect/id6474037926", title: "The PI.FYI App" }
+];
 
 export default function RootLayout({
 	// Layouts must accept a children prop.
@@ -37,9 +44,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={arialNarrow.className}>
-				<Navbar />
+				<Navbar links={globalNavLinks} />
 				<main>{children}</main>
 			</body>
 		</html>
-	)
+	);
 }

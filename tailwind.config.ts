@@ -18,11 +18,13 @@ const config: Config = {
 				"secondary": "rgb(255, 187, 0)",
 				"tertiary": "rgb(222, 0, 0)",
 				"bgColor": "white",
-				"fgColor": "rgb(226, 232, 240)"
+				"fgColor": "rgb(226, 232, 240)",
+				"textColor": "black"
 			},
 			fontFamily: {
 				"default": '"Arial Narrow", sans-serif'
-			}
+			},
+			
 		}
 	},
 	plugins: [],

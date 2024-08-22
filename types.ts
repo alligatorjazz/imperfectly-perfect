@@ -1,0 +1,1 @@
+export type NavLinks = { href: string, title: string }[]
