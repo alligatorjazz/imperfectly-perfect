@@ -1,5 +1,3 @@
-import Image from "next/image";
-import LogoImage from "../assets/img/logo.svg";
 import { HTMLAttributes } from "react";
 
 export function Logo(props: HTMLAttributes<HTMLDivElement> & { scale?: number }) {
