@@ -23,7 +23,9 @@ export function Navbar({ links, className }: Props) {
 			<div className="hover:cursor-pointer" onClick={() => setDrawerActive(prev => !prev)}>
 				<FiMenu size={20} />
 			</div>
-			<Logo className="flex justify-center flex-1" />
+			<a href="/">
+				<Logo className="flex justify-center flex-1" />
+			</a>
 			<div className="w-[20px]"></div>
 		</header>
 		<NavDrawer
