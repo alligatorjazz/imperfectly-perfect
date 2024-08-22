@@ -3,6 +3,7 @@ import { HTMLAttributes, useEffect } from "react";
 import { NavLinks } from "../types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Header } from "./Header";
 
 export function LocalNav({ links, className, ...props }: { links: NavLinks } & HTMLAttributes<HTMLDivElement>) {
 	const pathname = usePathname();
@@ -15,11 +16,11 @@ export function LocalNav({ links, className, ...props }: { links: NavLinks } & H
 				key={href}
 				href={href}
 				className={[
-					"text-2xl font-bold text-secondary uppercase text-stroke-thin text-stroke-tertiary flex-1 text-center",
+					"flex-1 text-center",
 					pathname === href ? "text-4xl" : ""
 				].join(" ")}
 			>
-				{title}
+				<Header>{title}</Header>
 			</Link>
 		))}
 	</nav>;
