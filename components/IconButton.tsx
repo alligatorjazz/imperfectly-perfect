@@ -18,12 +18,12 @@ export function IconButton({ className, tooltip, children }: Props) {
 		const rect = element.getBoundingClientRect();
 		// push tooltip in bounds (horizontally)
 		if (rect.left < 0) {
-			element.style.left = `calc(50% - ${rect.left }px)`
+			element.style.left = `calc(50% - ${rect.left }px)`;
 		}
 		if (rect.right > window.innerWidth) {
-			element.style.left = `calc(50% - ${rect.right - window.innerWidth}px)`
+			element.style.left = `calc(50% - ${rect.right - window.innerWidth}px)`;
 		}
-		console.log("repositioned: ", rect);
+		
 		// // push tooltip in bounds (vertically)
 		// if (rect.top * 2< 0) {
 		// 	element.style.top = `calc(50% - ${rect.top * 2}px)`
@@ -31,7 +31,7 @@ export function IconButton({ className, tooltip, children }: Props) {
 		// if (rect.bottom * 2 > window.innerHeight) {
 		// 	element.style.top = `calc(50% - ${rect.bottom * 2 - window.innerHeight}px)`
 		// }
-	}, [])
+	}, []);
 
 	useEffect(reposition, []);
 	return (

@@ -10,12 +10,8 @@ export type UserPost = {
 	emoji?: Emoji
 	created_at: string,
 	author: string,
-	reRec: false
-} | { 
-	reRec: true, 
-	id: string, 
-	author: string 
-}
+	repost?: string
+} 
 
 export const SortCategories = [
 	{ emoji: "⭐", title: "Everything" },
@@ -54,5 +50,5 @@ export type UserProfile = {
 	following: string[],
 	blocked: string[],
 	created_at: string,
-	theme: ProfileTheme
+	avatar: string
 }

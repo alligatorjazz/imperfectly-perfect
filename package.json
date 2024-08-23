@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@designbycode/tailwindcss-text-stroke": "^1.2.1",
+    "@supabase/supabase-js": "^2.45.2",
     "dayjs": "^1.11.13",
     "emoji-type": "^1.0.4",
-    "ip.btw-types": "github:alligatorjazz/ip.btw-types",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
@@ -27,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "csv-writer": "^1.6.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "eslint-config-prettier": "^9.1.0",
