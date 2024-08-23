@@ -18,7 +18,7 @@ export function EditorialCard({ editorial, className, ...props }: Props) {
 				className="w-full"
 			/>
 			<div className="flex flex-col items-center border-y border-y-textColor border-dashed p-2">
-				<a href="/editorials/dummy" className="font-bold text-lg uppercase overflow-ellipsis">{editorial.guest}</a>
+				<div className="font-bold text-lg uppercase overflow-ellipsis">{editorial.guest}</div>
 				<p className="font-secondary">{dayjs(editorial.created_at).format("MMMM DD, YYYY")}</p>
 			</div>
 		</a>

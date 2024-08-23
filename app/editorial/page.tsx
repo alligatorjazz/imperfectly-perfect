@@ -1,9 +1,9 @@
-import { FiSearch } from "react-icons/fi";
-import { dummyEditorials } from "../../dummy";
 import { EditorialCard } from "../../components/EditorialCard";
 import { SearchBar } from "../../components/SearchBar";
+import { getEditorials } from "../../lib/api";
 
-export default function Index() {
+export default async function Index() {
+	const editorials = await getEditorials();
 	return (
 		<div>
 			<h1 className="text-3xl text-primary font-bold uppercase text-center flex flex-col gap-4 mb-8">
@@ -12,9 +12,9 @@ export default function Index() {
 					Perfectly Imperfect
 				</span>
 			</h1>
-			<SearchBar />
+			<SearchBar className="mb-8"/>
 			<div className="grid grid-cols-2 gap-6 w-full justify-items-center font-semibold text-xs">
-				{dummyEditorials.map(editorial => <EditorialCard key={editorial.timestamp + editorial.guest} editorial={editorial} className="max-w-md w-full h-full" />)}
+				{editorials?.map(editorial => <EditorialCard key={editorial.id} editorial={editorial} className="max-w-md w-full h-full" />)}
 			</div>
 		</div>
 	);

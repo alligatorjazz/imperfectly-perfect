@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import { Button } from "../components/Button";
+import { LoginPanel } from "../components/LoginPanel";
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
 	title: 'PI.FYI | Home',
@@ -8,6 +10,8 @@ export const metadata: Metadata = {
 
 export default function Index() {
 	return (
-		<a href="/home"><Button>Go Home</Button></a>
+		<div className="w-full h-screen flex justify-center items-center">
+			<LoginPanel className="mb-16" />
+		</div>
 	);
 }

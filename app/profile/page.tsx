@@ -1,10 +1,5 @@
 import dayjs from "dayjs";
 import { Header } from "../../components/Header";
-import { PostList } from "../../components/PostList";
-import { SearchBar } from "../../components/SearchBar";
-import { UnrolledSelect } from "../../components/UnrolledSelect";
-import { UserCard } from "../../components/UserCard";
-import { dummyPosts, dummyUsers } from "../../dummy";
 
 // TODO: add emoji based on post tags
 
@@ -20,9 +15,10 @@ export default function Profile() {
 				<div className="flex justify-between uppercase text-sm font-bold">
 					<p>Following</p>
 					<p className="underline decoration-dashed decoration-slate-400">0 People</p>
-				</div>
+				</div> 
 			</div>
-			<PostList posts={dummyPosts.slice(0, 5)}/>
+			{/* <PostList posts={dummyPosts.slice(0, 5)}/> */}
+			<p>unimplemented</p>
 		</div>
 	);
 }

@@ -3,6 +3,7 @@ import { LocalNav } from "../../components/LocalNav";
 import { PostInput } from "../../components/PostInput";
 import { MainTemplate } from "../_templates/Main";
 import { NavLinks } from "../../types";
+import "../globals.css";
 
 const localLinks: NavLinks = [
 	{ href: "/home", title: "Home" },

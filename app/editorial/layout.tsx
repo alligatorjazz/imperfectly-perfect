@@ -4,7 +4,7 @@ export default function EditorialLayout({ children, }: {
 	children: React.ReactNode
 }) {
 	return (
-		<MainTemplate >
+		<MainTemplate>
 			<div className="flex flex-col p-8">
 				{children}
 			</div>
