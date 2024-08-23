@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
-import { FormEventHandler, HTMLAttributes } from "react";
-import { login } from "../lib/api";
-import { Button } from "./Button";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { HTMLAttributes } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { login } from "../lib/api";
 
 type Inputs = {
 	email: string

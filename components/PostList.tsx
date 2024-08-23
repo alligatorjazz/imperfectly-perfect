@@ -41,7 +41,7 @@ export function PostList({ posts }: Props) {
 								{/* TODO: reposter details */}
 								{reposter && <div className="flex flex-1 gap-1 text-xs opacity-40">
 									<Image
-										src={reposter.avatar}
+										src={reposter.avatar ?? "/img/dummy-avatar.avif"}
 										width={16}
 										height={16}
 										alt={`${reposter.display_name}'s avatar.`}
@@ -59,7 +59,7 @@ export function PostList({ posts }: Props) {
 							{/* TODO: implement user fetching */}
 							<div className="flex justify-between items-center gap-2">
 								<Image
-									src={"/img/dummy-avatar.avif"}
+									src={author?.avatar ?? "/img/dummy-avatar.avif"}
 									alt={`${author?.username}'s avatar.`}
 									width={18}
 									height={18}

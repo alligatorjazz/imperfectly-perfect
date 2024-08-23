@@ -50,5 +50,5 @@ export type UserProfile = {
 	following: string[],
 	blocked: string[],
 	created_at: string,
-	avatar: string
+	avatar?: string
 }

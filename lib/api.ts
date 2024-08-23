@@ -33,7 +33,22 @@ export async function restoreSession() {
 }
 
 
+export async function followAccount(id: string) {
+	const profile = await getLoginProfile()
+	if (!profile) {
+		return logout();
+	}
 
+	const updatedFollows = profile.following.concat(id);
+	// save updated follows
+	const { error } = await supabase
+		.from("user-profiles")
+		.update({ following: updatedFollows });
+
+	if (error) {
+		console.log(error);
+	}
+}
 export const getPost = cache(async (id: string) => {
 	await restoreSession();
 	const { data, error } = await supabase
@@ -102,6 +117,39 @@ export const getProfiles = cache(async () => {
 	return data as UserProfile[] | null;
 });
 
+export const createProfile = cache(async (data: UserProfile) => {
+	await restoreSession();
+	const { error } = await supabase
+		.from("user-profiles")
+		.insert(data);
+
+	if (error) {
+		console.error(error);
+	}
+
+	return data as UserProfile;
+})
+
+export async function getLoginProfile() {
+	const { data: { user }, error } = await supabase.auth.getUser();
+	if (error) { console.error(error) }
+	if (!user) { return null; }
+
+	const profile = await getProfile(user.id)
+	if (!profile) {
+		const username = (user.email ? user.email.split("@")[0] : "newuser") + (Math.random() * 1000).toString();
+		return createProfile({
+			id: user.id,
+			username,
+			display_name: username,
+			following: [],
+			blocked: [],
+			created_at: new Date().toISOString()
+		})
+	}
+
+	return profile;
+}
 
 export const getEditorials = cache(async () => {
 	await restoreSession();
@@ -116,3 +164,4 @@ export const getEditorials = cache(async () => {
 
 	return data as Editorial[] | null;
 });
+
