@@ -1,6 +1,6 @@
 import { Emoji } from "emoji-type";
 import { cache } from "react";
-import { createClient } from '@supabase/supabase-js';
+import { createClient, User } from '@supabase/supabase-js';
 import { UserPost, UserProfile } from "../types";
 import dayjs from "dayjs";
 
@@ -28,7 +28,8 @@ export const getPosts = cache(async (params?: {
 	about?: Emoji,
 	with?: "link" | "image",
 	contains?: string[],
-	limit?: number
+	limit?: number,
+	original?: boolean
 }) => {
 	const { data, error } = await supabase
 		.from("posts")
@@ -38,8 +39,8 @@ export const getPosts = cache(async (params?: {
 	if (error) {
 		console.error(error);
 	}
-	
-	return data?.sort((a: UserPost, b: UserPost) => dayjs(a.created_at).isBefore(b.created_at) ? 1 : -1) as UserPost[] | null;
+
+	return data?.sort((a: UserPost, b: UserPost) => dayjs(a.created_at).isBefore(b.created_at) ? 1 : -1)?.filter((post: UserPost) => !post.repost && params?.original) as UserPost[] | null;
 });
 
 

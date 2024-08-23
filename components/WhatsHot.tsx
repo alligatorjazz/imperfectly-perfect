@@ -1,17 +1,20 @@
-import { Emoji } from "emoji-type";
-import { UserPost } from "../types";
-import { Header } from "./Header";
 import { faker } from '@faker-js/faker';
+import { Header } from "./Header";
 import { PostList } from "./PostList";
-import { join } from "path";
-import { dummyPosts } from "../dummy";
+import { getPosts } from '../lib/api';
 
 
-export function WhatsHot() {
+export async function WhatsHot() {
+	const posts = await getPosts({
+		after: faker.date.recent(),
+		limit: 20,
+		original: true
+	});
+
 	return (
 		<div>
 			<Header level={1} className="text-5xl w-full text-center py-8">{"What's hot?"}</Header>
-			<PostList posts={dummyPosts} />
+			{posts && <PostList posts={posts} />}
 		</div>
 	);
 }
