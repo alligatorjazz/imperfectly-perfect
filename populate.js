@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Emoji } from "emoji-type";
-import { Editorial, UserAccount, UserPost } from "ip.btw-types";
+import { Editorial, UserProfile, UserPost } from "ip.btw-types";
 import { db } from "../ip.btw/src/db";
 import { randomUUID } from "crypto";
 
@@ -9,7 +9,7 @@ function randomFrom(array: any[]) {
 	return array[Math.floor(Math.random() * array.length)];
 }
 
-export const dummyUsers: UserAccount[] = [];
+export const dummyUsers: UserProfile[] = [];
 for (let i = 0; i < 100; i++) {
 	dummyUsers.push({
 		id: randomUUID(),

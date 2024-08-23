@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Emoji } from "emoji-type";
-import { Editorial, UserAccount, UserPost } from "./types";
+import { Editorial, UserProfile, UserPost } from "./types";
 
 export const dummyPosts: UserPost[] = [];
 for (let i = 0; i < 50; i++) {
@@ -25,7 +25,7 @@ for (let i = 0; i < 20; i++) {
 	});
 }
 
-export const dummyUsers: UserAccount[] = []
+export const dummyUsers: UserProfile[] = []
 for (let i = 0; i < 100; i++) {
 	dummyUsers.push({
 		id: crypto.randomUUID(),

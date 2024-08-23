@@ -1,11 +1,11 @@
 import { HTMLAttributes } from "react";
-import { UserAccount } from "../types";
+import { UserProfile } from "../types";
 import Image from "next/image";
 import { faker } from "@faker-js/faker";
 import { Header } from "./Header";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-	user: UserAccount
+	user: UserProfile
 }
 
 export function UserCard({ user }: Props) {

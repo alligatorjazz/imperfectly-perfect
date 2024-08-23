@@ -8,10 +8,14 @@ export type UserPost = {
 	image?: string
 	link?: string
 	emoji?: Emoji
-	timestamp: string,
-	authorId: string,
+	created_at: string,
+	author: string,
 	reRec: false
-} | { reRec: true, id: string, recommender: string }
+} | { 
+	reRec: true, 
+	id: string, 
+	author: string 
+}
 
 export const SortCategories = [
 	{ emoji: "⭐", title: "Everything" },
@@ -28,10 +32,11 @@ export const SortCategories = [
 
 
 export type Editorial = {
+	id: string,
 	guest: string,
-	timestamp: string,
-	coverUrl: string,
-	accountId: string
+	created_at: string,
+	cover: string,
+	account: string
 }
 
 export type ProfileTheme = {
@@ -42,12 +47,12 @@ export type ProfileTheme = {
 	tertiary?: string
 }
 
-export type UserAccount = {
+export type UserProfile = {
 	id: string,
 	username: string,
-	displayName: string,
-	followingIds: string[],
-	blockedIds: string[],
-	joinedAt: string,
+	display_name: string,
+	following: string[],
+	blocked: string[],
+	created_at: string,
 	theme: ProfileTheme
 }
