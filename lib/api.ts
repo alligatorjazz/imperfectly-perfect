@@ -2,7 +2,7 @@ import { Emoji } from "emoji-type";
 import { cache } from "react";
 import { createClient, User } from '@supabase/supabase-js';
 import { Editorial, UserPost, UserProfile } from "../types";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 const supabase = createClient('https://gujhjoklpwgyemsvomlj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1amhqb2tscHdneWVtc3ZvbWxqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjQzNjg5NDEsImV4cCI6MjAzOTk0NDk0MX0.7_e-BQXRLkDjP8fbpnP6TVyPlSsi6ItAX0WTJUyHdxQ');
 
@@ -77,6 +77,7 @@ export const getPosts = cache(async (params?: {
 	const { data, error } = await supabase
 		.from("posts")
 		.select(`*`)
+		.gte("created_at", dayjs().subtract(1, "week"))
 		.limit(100);
 
 	if (error) {

@@ -1,4 +1,5 @@
 import { ProfilePanel } from "../../../components/ProfilePanel";
+import { restoreSession } from "../../../lib/api";
 
 // TODO: add emoji based on post tags
 
