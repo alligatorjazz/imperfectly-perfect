@@ -50,6 +50,15 @@ export async function followAccount(id: string) {
 		console.log(error);
 	}
 }
+
+export async function postAndRefresh(postData: UserPost, customCallback?: () => void) {
+	await createPost(postData);
+	const remote = await getPost(postData.id);
+	if (remote?.id == postData.id) {
+		customCallback ? customCallback() : window.location.reload();
+	}
+
+}
 export const getPost = cache(async (id: string) => {
 	await restoreSession();
 	const { data, error } = await supabase
@@ -58,7 +67,7 @@ export const getPost = cache(async (id: string) => {
 		.eq("id", id)
 		.single();
 
-	if (error) {
+	if (error && error.code !== "PGRST116") {
 		console.error(error);
 	}
 
@@ -86,7 +95,13 @@ export const getPosts = cache(async (params?: {
 		console.error(error);
 	}
 
-	return data?.sort((a: UserPost, b: UserPost) => dayjs(a.created_at).isBefore(b.created_at) ? 1 : -1)?.filter((post: UserPost) => !post.repost || !params?.original) as UserPost[] | null;
+	return data?.sort((a: UserPost, b: UserPost) => dayjs(a.created_at).isBefore(b.created_at) ? 1 : -1)?.filter((post: UserPost) => {
+		if (params?.original) {
+			return !post.repost;
+		} else {
+			return true;
+		}
+	}) as UserPost[] | null;
 });
 
 export const getPostsBy = cache(async (id: string) => {
@@ -115,6 +130,18 @@ export const createPost = cache(async (post: UserPost) => {
 		.insert(post);
 
 	if (error) {
+		console.error(error);
+	}
+});
+
+export const deletePost = cache(async (id: string) => {
+	await restoreSession();
+	const { error } = await supabase
+		.from("posts")
+		.delete()
+		.eq("id", id);
+
+	if (error && error.code != "PGRST116") {
 		console.error(error);
 	}
 });
@@ -238,7 +265,7 @@ export async function getPublicUrl(fullPath: string) {
 	const { data } = supabase.storage
 		.from("anon")
 		.getPublicUrl(fullPath);
-	
+
 	return data.publicUrl;
 }
 

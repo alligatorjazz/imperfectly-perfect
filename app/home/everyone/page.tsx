@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getPosts } from "../../../lib/api";
-import { SortableFeed } from "../../../components/SortableFeed";
+import { PostList } from "../../../components/PostList";
 
 export const metadata: Metadata = {
 	title: 'PI.FYI | Everyone',
@@ -12,7 +12,7 @@ export default async function Everyone() {
 
 	return (
 		<>
-			{posts && <SortableFeed posts={posts} />}
+			{posts && <PostList posts={posts} />}
 		</>
 	);
 }
