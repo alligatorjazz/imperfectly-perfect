@@ -20,10 +20,10 @@ export function FollowingPanel({ className, ...props }: HTMLAttributes<HTMLDivEl
 			const { following } = profile;
 			const followedPosts = [];
 			Promise.all(following.map(async (id) => {
-				return await getPosts({ by: id })
+				return await getPosts({ by: id });
 			})).then(result => setPosts((result.filter(result => result) as UserPost[][]).flat(1)));
 		}
-	}, [profile])
+	}, [profile]);
 
 	return (
 		<div>
@@ -31,7 +31,7 @@ export function FollowingPanel({ className, ...props }: HTMLAttributes<HTMLDivEl
 				<PostList posts={posts} /> :
 				profile && profile.following.length > 0 ?
 					<h1 className="text-xl uppercase text-center">No posts from your follows yet.</h1> :
-					<h1 className="text-xl uppercase text-center">You don't follow anyone yet.</h1>
+					<h1 className="text-xl uppercase text-center">{"You don't follow anyone yet."}</h1>
 			}
 		</div>
 	);
