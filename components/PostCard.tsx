@@ -1,3 +1,4 @@
+"use client";
 import dayjs from "dayjs";
 import { FiLink, FiMoreHorizontal, FiBookmark } from "react-icons/fi";
 import { getProfileLink } from "../lib/utils";
@@ -13,8 +14,9 @@ import { useLoginId } from "../hooks/useLoginId";
 
 interface Props {
 	post: UserPost
+	id?: string
 }
-export function PostCard({ post: data }: Props) {
+export function PostCard({ post: data, id }: Props) {
 	const loginId = useLoginId();
 	const [author, setAuthor] = useState<UserProfile>();
 	const [reposter, setReposter] = useState<UserProfile>();
@@ -71,7 +73,7 @@ export function PostCard({ post: data }: Props) {
 
 	return (
 		<>
-			{post && <div className="flex flex-col border border-dashed border-textColor" key={post.id}>
+			{post && <div id={id} className="flex flex-col border border-dashed border-textColor" key={post.id}>
 				{/* post content */}
 				<div className="flex flex-col p-4">
 					{/* top row */}
@@ -107,7 +109,7 @@ export function PostCard({ post: data }: Props) {
 										Re-Rec
 									</button>
 								</li>}
-								<li className="h-8 w-32 flex justify-center">
+								{/* <li className="h-8 w-32 flex justify-center">
 									<button
 										onClick={() => {
 											navigator.clipboard.writeText(`https://${window.location.hostname}/posts/${post.id}`);
@@ -117,7 +119,7 @@ export function PostCard({ post: data }: Props) {
 									>
 										Copy Link
 									</button>
-								</li>
+								</li> */}
 								{(data.author === loginId) && <li className="h-8 w-32 flex justify-center">
 									<button onClick={() => deletePost(data.id).finally(() => window.location.reload())} className="uppercase">Delete</button>
 								</li>}

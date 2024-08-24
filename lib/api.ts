@@ -74,44 +74,50 @@ export const getPost = cache(async (id: string) => {
 	return data as UserPost | null;
 });
 
-export const getPosts = cache(async (params?: {
-	before?: Date,
-	after?: Date,
-	// about?: Emoji,
-	// with?: "link" | "image",
-	// contains?: string[],
+export type GetPostsParams = {
+	before?: string | Date,
+	after?: string | Date,
 	limit?: number,
 	original?: boolean
-}) => {
+}
+
+export const getPosts = cache(async (params?: GetPostsParams) => {
 	await restoreSession();
 	const { data, error } = await supabase
 		.from("posts")
 		.select(`*`)
-		.lte("created_at", params?.before ?? dayjs())
-		.gte("created_at", params?.after ?? dayjs().subtract(1, "week"))
+		.order("created_at", { ascending: false })
+		.lt("created_at", params?.before ?? dayjs().toISOString())
+		.gt("created_at", params?.after ?? dayjs().subtract(999, "year").toISOString())
 		.limit(params?.limit ?? 100);
 
 	if (error) {
 		console.error(error);
 	}
 
-	return data?.sort((a: UserPost, b: UserPost) => dayjs(a.created_at).isBefore(b.created_at) ? 1 : -1)?.filter((post: UserPost) => {
-		if (params?.original) {
-			return !post.repost;
-		} else {
-			return true;
-		}
-	}) as UserPost[] | null;
+
+	const result = data
+		?.filter((post: UserPost) => {
+			if (params?.original) {
+				return !post.repost;
+			} else {
+				return true;
+			}
+		}) as UserPost[] | null;
+	console.log(await supabase.from("posts"),);
+	return result;
 });
 
-export const getPostsBy = cache(async (id: string) => {
+export const getPostsBy = cache(async (id: string, params: GetPostsParams) => {
 	await restoreSession();
 
 	const { data, error } = await supabase
 		.from("posts")
 		.select(`*`)
+		.lt("created_at", params?.before ?? dayjs().toISOString())
+		.gt("created_at", params?.after ?? dayjs().subtract(999, "year").toISOString())
 		.eq("author", id)
-		.limit(100);
+		.limit(params?.limit ?? 100);
 
 	if (error) {
 		console.error(error);
@@ -147,8 +153,8 @@ export const deletePost = cache(async (id: string) => {
 });
 
 export const getProfile = cache(async (id: string) => {
-	await restoreSession();
-	// console.log("fetching profile with id ", id);
+	const session = await restoreSession();
+
 	const { data, error } = await supabase
 		.from("user-profiles")
 		.select("*")
@@ -157,10 +163,18 @@ export const getProfile = cache(async (id: string) => {
 		.single();
 
 	if (error && error.code != "PGRST116") {
-		console.error(error, data);
+		console.error(error.code, data);
 	}
 
-	return data as UserProfile | null;
+	if (!data) {
+		if (id === session?.user.id) {
+			return await getLoginProfile();
+		} else {
+			return null;
+		}
+	}
+	return data as UserProfile;
+
 });
 
 export const getProfiles = cache(async () => {
@@ -212,11 +226,16 @@ export async function getLoginProfile() {
 	const session = await restoreSession();
 	if (!session) { return null; }
 	const { user } = session;
-	const profile = await getProfile(session.user.id);
+	const { data: profile, error } = await supabase
+		.from("user-profiles")
+		.select("*")
+		.eq("id", user.id)
+		.single();
+
 	if (!profile) {
 		const username = (user.email ? user.email.split("@")[0] : "newuser") + (Math.floor(Math.random() * 1000)).toString();
 		return createProfile({
-			id: "user:" + user.id,
+			id: user.id,
 			username,
 			display_name: username,
 			following: [],

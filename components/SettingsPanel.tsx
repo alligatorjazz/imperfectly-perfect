@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { HTMLAttributes, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { getLoginProfile, login, updateProfile } from "../lib/api";
+import { getLoginProfile, login, logout, updateProfile } from "../lib/api";
 import { UserProfile } from "../types";
 import { useLoginProfile } from "../hooks/useLoginProfile";
 
@@ -46,7 +46,7 @@ export function SettingsPanel({ className, ...props }: HTMLAttributes<HTMLDivEle
 		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
 			<div className="flex gap-2 mb-4">
 				<button type="submit" className="font-primary font-bold px-3 py-2 text-xs uppercase bg-primary text-bgColor">Save Changes</button>
-				<button onClick={changePhoto} type="button" className="font-primary font-bold px-3 py-2 text-xs uppercase border border-primary text-primary">Change Photo</button>
+				<button onClick={() => { logout(); router.push("/"); }} type="button" className="font-primary font-bold px-3 py-2 text-xs uppercase border border-primary text-primary">Logout</button>
 			</div>
 			<div className="py-4 border-y border-y-textColor border-dashed">
 				<div className="flex flex-col gap-3">

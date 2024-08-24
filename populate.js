@@ -13,12 +13,12 @@ for (let i = 0; i < 200; i++) {
 		display_name: faker.person.firstName(),
 		following: i > 0 ? new Array(Math.floor(30 * Math.random())).fill(null).map(() => randomFrom(dummyUsers).id) : [],
 		blocked: (Math.random() > 0.95 && i > 0) ? [randomFrom(dummyUsers).id] : [],
-		created_at: faker.date.past({ years: 1 }).toISOString()
+		created_at: faker.date.past({ years: 10 }).toISOString()
 	});
 }
 
 const dummyPosts = [];
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 5000; i++) {
 	const post = (Math.random() > 0.4 && i > 0) ? {
 		id: randomUUID(),
 		headline: faker.lorem.sentence(),
@@ -26,7 +26,7 @@ for (let i = 0; i < 1000; i++) {
 		image: undefined,
 		link: undefined,
 		emoji: undefined,
-		created_at: faker.date.past({ years: 1 }).toISOString(),
+		created_at: faker.date.past({ years: 10 }).toISOString(),
 		repost: randomFrom(dummyPosts.filter(post => !post.reRec)).id,
 		author: randomFrom(dummyUsers).id
 	} : {
@@ -36,7 +36,7 @@ for (let i = 0; i < 1000; i++) {
 		image: Math.random() > 0.8 ? faker.image.urlLoremFlickr() : undefined,
 		link: Math.random() > 0.8 ? faker.internet.url() : undefined,
 		emoji: Math.random() > 0.6 ? faker.internet.emoji() : undefined,
-		created_at: faker.date.past({ years: 1 }).toISOString(),
+		created_at: faker.date.past({ years: 10 }).toISOString(),
 		repost: undefined,
 		author: randomFrom(dummyUsers).id
 	};

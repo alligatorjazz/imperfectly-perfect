@@ -17,24 +17,24 @@ export function LoginPanel({ className, ...props }: HTMLAttributes<HTMLDivElemen
 	useEffect(() => {
 		restoreSession().then(session => {
 			if (session) {
-				router.push("/home")
+				router.push("/home");
 			}
 		});
-	}, [])
+	}, [router]);
 
 	const {
 		register,
 		handleSubmit,
 		setError,
 		formState: { errors },
-	} = useForm<Inputs>()
+	} = useForm<Inputs>();
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		const { user, session } = await login(data.email, data.password as string);
 		if (user && session) {
-			router.push("/home")
+			router.push("/home");
 		} else {
-			setError("root", { message: "Your email or password was incorrect." })
+			setError("root", { message: "Your email or password was incorrect." });
 		}
 	};
 

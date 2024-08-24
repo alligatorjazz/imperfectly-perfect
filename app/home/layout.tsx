@@ -7,7 +7,7 @@ import "../globals.css";
 
 const localLinks: NavLinks = [
 	{ href: "/home", title: "Home" },
-	{ href: "/home/following", title: "Friends" },
+	// { href: "/home/following", title: "Friends" },
 	{ href: "/home/everyone", title: "Everyone" }
 ];
 

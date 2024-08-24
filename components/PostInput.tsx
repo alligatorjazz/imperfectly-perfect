@@ -45,7 +45,7 @@ export function PostInput() {
 				link
 			};
 
-			postAndRefresh(postData);
+			postAndRefresh(postData, () => {alert("Posted!"); window.location.reload();});
 		} else if (!isValid) {
 			console.error(errors);
 			alert("Couldn't post: \n" + Object.values(errors).join("\n"));
