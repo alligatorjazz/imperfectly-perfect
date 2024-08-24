@@ -11,6 +11,7 @@ import { getProfile, getPost, postAndRefresh, deletePost } from "../lib/api";
 import Image from "next/image";
 import { v4 } from "uuid";
 import { useLoginId } from "../hooks/useLoginId";
+import Link from "next/link";
 
 interface Props {
 	post: UserPost
@@ -81,7 +82,7 @@ export function PostCard({ post: data, id }: Props) {
 						<div className="text-3xl">{post.emoji ?? "⭐️"}</div>
 						<div className="flex flex-1 gap-4 items-center">
 							{post.link && <a href={post.link}><FiLink size={24} color="blue" /></a>}
-							{reposter && <a href={getProfileLink(reposter.id)} className="flex flex-1 gap-1 text-xs opacity-40">
+							{reposter && <Link href={getProfileLink(reposter.id)} className="flex flex-1 gap-1 text-xs opacity-40">
 								<Image
 									src={reposter.avatar ?? "/img/dummy-avatar.avif"}
 									width={16}
@@ -90,7 +91,7 @@ export function PostCard({ post: data, id }: Props) {
 									className="w-4 h-4"
 								/>
 								<p className="font-bold italic uppercase">{"Re-Rec'd by @" + reposter.username}</p>
-							</a>}
+							</Link>}
 						</div>
 						<TooltipContainer
 							tooltip={<ul className="flex flex-col font-primary font-bold">
@@ -147,7 +148,7 @@ export function PostCard({ post: data, id }: Props) {
 							className="object-contain"
 						/>
 					</div>}
-					<a className="flex justify-between items-center gap-2" href={author ? getProfileLink(author.id) : "/404"}>
+					<Link className="flex justify-between items-center gap-2" href={author ? getProfileLink(author.id) : "/404"}>
 						<Image
 							src={author?.avatar ?? "/img/dummy-avatar.avif"}
 							alt={`${author?.username}'s avatar.`}
@@ -162,7 +163,7 @@ export function PostCard({ post: data, id }: Props) {
 									dayjs(post.created_at).fromNow()
 							}
 						</p>
-					</a>
+					</Link>
 
 				</div >
 				{/* post actions */}

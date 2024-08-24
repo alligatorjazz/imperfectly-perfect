@@ -1,11 +1,25 @@
 import { Emoji } from "emoji-type";
-import { cache } from "react";
+import { cache, use } from "react";
 import { createClient, User } from '@supabase/supabase-js';
 import { Editorial, UserPost, UserProfile } from "../types";
 import dayjs, { Dayjs } from "dayjs";
 import { v4 } from "uuid";
 
 const supabase = createClient('https://gujhjoklpwgyemsvomlj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1amhqb2tscHdneWVtc3ZvbWxqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjQzNjg5NDEsImV4cCI6MjAzOTk0NDk0MX0.7_e-BQXRLkDjP8fbpnP6TVyPlSsi6ItAX0WTJUyHdxQ');
+
+export async function signUp(email: string, password: string) {
+	const { data, error } = await supabase.auth.signUp({ email, password });
+	if (error && !data) {
+		throw new Error(`${error}`);
+	}
+
+
+	if (!data.user) {
+		throw new Error("Signup did not return valid user:\n" + JSON.stringify(data, null, 4));
+	}
+
+	return login(email, password);
+}
 
 export async function login(email: string, password: string) {
 	const { data, error } = await supabase.auth.signInWithPassword({ email, password });

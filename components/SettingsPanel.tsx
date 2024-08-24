@@ -29,19 +29,18 @@ export function SettingsPanel({ className, ...props }: HTMLAttributes<HTMLDivEle
 		}
 	};
 
-	// TODO: test photo changing
-	const changePhoto = async () => {
-		if (profile) {
-			const newUrl = prompt([
-				"Paste a photo url here: "
-			].join("\n"));
+	// const changePhoto = async () => {
+	// 	if (profile) {
+	// 		const newUrl = prompt([
+	// 			"Paste a photo url here: "
+	// 		].join("\n"));
 
-			if (newUrl) {
-				await updateProfile({ avatar: newUrl });
-				window.location.reload();
-			}
-		}
-	};
+	// 		if (newUrl) {
+	// 			await updateProfile({ avatar: newUrl });
+	// 			window.location.reload();
+	// 		}
+	// 	}
+	// };
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
 			<div className="flex gap-2 mb-4">

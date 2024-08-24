@@ -16,7 +16,7 @@ export function ProfilePanel({ className, profileId, ...props }: HTMLAttributes<
 
 	return (
 		<div>
-			<Header level={1} className="text-7xl w-full text-center mb-4 block whitespace-nowrap text-ellipsis">{"@" + (profile?.username ?? "notfound")}</Header>
+			<Header level={1} className="text-2xl md:text-4xl lg:text-6xl w-full text-center mb-4 block whitespace-nowrap text-ellipsis " >{"@" + (profile?.username ?? "notfound")}</Header>
 			<div className="border-b border-dashed py-4 border-textColor mb-8">
 				<div className="flex justify-between uppercase text-sm font-bold">
 					<p>Joined</p>

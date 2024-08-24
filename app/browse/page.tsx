@@ -9,8 +9,8 @@ export default async function Browse() {
 	return (
 		<div>
 			<Header level={1} className="text-5xl w-full text-center py-8">{"Browse all"}</Header>
-			<SearchBar className="mb-8"/>
-			<UnrolledSelect className="mb-8"/>
+			<SearchBar className="mb-8" />
+			<UnrolledSelect className="mb-8" />
 			{posts && <PostList posts={posts} />}
 		</div>
 	);
