@@ -1,5 +1,5 @@
 "use client";
-import { FiBookmark, FiMoreHorizontal } from "react-icons/fi";
+import { FiBookmark, FiLink, FiMoreHorizontal } from "react-icons/fi";
 import { UserPost, UserProfile } from "../types";
 import Image from "next/image";
 import { CommentsIcon } from "./CommentsIcon";
@@ -86,17 +86,19 @@ export function PostList({ posts }: Props) {
 							{/* top row */}
 							<div className="flex justify-between items-center gap-2 mb-4">
 								<div className="text-3xl">{post.emoji ?? "⭐️"}</div>
-								{/* TODO: reposter details */}
-								{reposter && <a href={getProfileLink(reposter.id)} className="flex flex-1 gap-1 text-xs opacity-40">
-									<Image
-										src={reposter.avatar ?? "/img/dummy-avatar.avif"}
-										width={16}
-										height={16}
-										alt={`${reposter.display_name}'s avatar.`}
-										className="w-4 h-4"
-									/>
-									<p className="font-bold italic uppercase">{"Re-Rec'd by @" + reposter.username}</p>
-								</a>}
+								<div className="flex flex-1 gap-4">
+									{post.link && <a href={post.link}><FiLink size={24} color="blue" /></a>}
+									{reposter && <a href={getProfileLink(reposter.id)} className="flex flex-1 gap-1 text-xs opacity-40">
+										<Image
+											src={reposter.avatar ?? "/img/dummy-avatar.avif"}
+											width={16}
+											height={16}
+											alt={`${reposter.display_name}'s avatar.`}
+											className="w-4 h-4"
+										/>
+										<p className="font-bold italic uppercase">{"Re-Rec'd by @" + reposter.username}</p>
+									</a>}
+								</div>
 								<FiMoreHorizontal size={24} />
 							</div>
 							{/* headline */}
@@ -105,7 +107,7 @@ export function PostList({ posts }: Props) {
 							{post.body && <p className="font-content text-xl mb-4 leading-6">{post.body}</p>}
 							{/* author & timestamp */}
 							{post.image && <div className="p-4 max-h-[33vh] w-fill overflow-hidden mb-8">
-								<Image 
+								<Image
 									src={post.image}
 									width={160 * 3}
 									height={90 * 3}

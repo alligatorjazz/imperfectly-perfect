@@ -2,7 +2,7 @@
 import { Emoji } from 'emoji-type';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { FiImage, FiLink, FiTrash } from 'react-icons/fi';
+import { FiAlertTriangle, FiImage, FiLink, FiTrash } from 'react-icons/fi';
 import TextareaAutosize from 'react-textarea-autosize';
 import { UserPost } from '../types';
 import { Button } from './Button';
@@ -28,12 +28,13 @@ export function PostInput() {
 	const {
 		register,
 		handleSubmit,
-		setError,
-		formState: { errors },
-	} = useForm<Inputs>();
+		formState: { errors, isValid },
+		clearErrors
+	} = useForm<Inputs>({ "mode": "onSubmit" });
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
-		if (loginId) {
+		console.log("submitting...");
+		if (loginId && isValid) {
 			const postData: UserPost = {
 				...data,
 				emoji,
@@ -47,18 +48,24 @@ export function PostInput() {
 			createPost(postData)
 				.then(() => window.location.reload())
 				.catch(err => console.error(err));
+		} else if (!isValid) {
+			console.error(errors);
+			alert("Couldn't post: \n" + Object.values(errors).join("\n"));
 		}
 	};
 
 	useEffect(() => {
 		setImage(imageUrl ?? null);
-		console.log(imageUrl);
 	}, [imageUrl]);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="p-4 w-full border border-dashed border-textColor">
 			{loginId && <>
-				<TextareaAutosize {...register("headline")} className="w-full focus-visible:outline-none max-h-[8rem] scrollbar-none font-bold text-xl uppercase placeholder:opacity-40" placeholder="What have you been into?" onFocus={() => setBodyVisible(true)}></TextareaAutosize>
+				<TextareaAutosize {...register("headline", { required: true, minLength: { value: 1, message: "Your title must be at least 5 characters." } })} onChange={() => clearErrors("headline")} className="w-full focus-visible:outline-none max-h-[8rem] scrollbar-none font-bold text-xl uppercase placeholder:opacity-40" placeholder="What have you been into?" onFocus={() => setBodyVisible(true)}></TextareaAutosize>
+				{errors.headline && <div className='text-red-500 font-bold text-xs uppercase mb-2 flex items-center gap-1'>
+					<FiAlertTriangle color='red' />
+					<p>{"You've gotta have a title."}</p>
+				</div>}
 				{bodyVisible && <TextareaAutosize {...register("body")} className="w-full focus-visible:outline-none min-h-[4rem] max-h-[10rem] scrollbar-none font-content leading-tight placeholder:opacity-40" placeholder='Share what you love.'></TextareaAutosize>}
 				{image && <div className='flex items-center w-full h-32 gap-2 relative mb-4'>
 					<Image
@@ -79,11 +86,25 @@ export function PostInput() {
 						<EmojiSelector emoji={emoji} setEmoji={setEmoji} />
 						{/* TODO: enable link / image support */}
 						<button type='button' onClick={upload}>
-							<FiImage size={20} />
+							<FiImage size={20} color={image ? "blue" : ""} />
 						</button>
-						<button onClick={() => setLink(prompt("Paste your link's URL:"))}><FiLink size={20} /></button>
+						<button type='button' onClick={() => {
+							try {
+								const input = prompt("Put your URL here: ");
+								if (!input) {
+									return;
+								}
+								const url = new URL(input);
+								setLink(url.toString());
+							} catch (err) {
+								console.error(err);
+								alert("The URL you entered was not valid.");
+							}
+						}}>
+							<FiLink size={20} color={link ? "blue" : ""} />
+						</button>
 					</div>
-					<Button>Share</Button>
+					<Button type='submit'>Share</Button>
 				</div>
 			</>}
 		</form>
