@@ -2,8 +2,9 @@
 import { useRouter } from "next/navigation";
 import { HTMLAttributes, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { getLoginProfile, login } from "../lib/api";
+import { getLoginProfile, login, updateProfile } from "../lib/api";
 import { UserProfile } from "../types";
+import { useLoginProfile } from "../hooks/useLoginProfile";
 
 type Inputs = {
 	username: string
@@ -12,18 +13,7 @@ type Inputs = {
 
 export function SettingsPanel({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
 	// TODO: loading indicator + input lock when logging in
-	const [profile, setProfile] = useState<UserProfile>();
-	useEffect(() => {
-		if (!profile) {
-			getLoginProfile()
-				.then(result => {
-					result ? setProfile(result) : router.push("/")
-				}).catch(err => {
-					console.error(err);
-					router.push("/");
-				})
-		}
-	}, [profile])
+	const profile = useLoginProfile();
 	const router = useRouter();
 	const {
 		register,
@@ -33,32 +23,45 @@ export function SettingsPanel({ className, ...props }: HTMLAttributes<HTMLDivEle
 	} = useForm<Inputs>();
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
-		console.log(data);
+		if (profile) {
+			await updateProfile({ username: data.username ?? profile.username, display_name: data.displayName ?? profile.display_name });
+			window.location.reload();
+		}
 	};
 
+	// TODO: test photo changing
+	const changePhoto = async () => {
+		if (profile) {
+			const newUrl = prompt([
+				"Yes, I know it's crude, but I don't know how long you guys are hiring and I wanted to get this out before it was too late.",
+				"Paste a photo url here: "
+			].join("\n"))
+			await updateProfile({ avatar: newUrl ?? profile.avatar });
+			window.location.reload();
+		}
+	}
 	return (
-		<div className="flex flex-col">
+		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
 			<div className="flex gap-2 mb-4">
-				<button className="font-primary font-bold px-3 py-2 text-xs uppercase bg-primary text-bgColor">Save Changes</button>
+				<button type="submit" className="font-primary font-bold px-3 py-2 text-xs uppercase bg-primary text-bgColor">Save Changes</button>
 				<button className="font-primary font-bold px-3 py-2 text-xs uppercase border border-primary text-primary">Change Photo</button>
 			</div>
 			<div className="py-4 border-y border-y-textColor border-dashed">
-				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+				<div className="flex flex-col gap-3">
 					{profile && <>
 						<div className="flex flex-col gap-1 max-w-md">
 							<label className="uppercase font-bold font-primary text-sm">Screen Name - <span className="italic">Peasants Permitted</span></label>
-							<input {...register("username")} type="text" className="px-2 py-1 font-secondary  border border-black bg-blue-100" required placeholder={""} />
+							<input {...register("username")} type="text" className="px-2 py-1 font-secondary  border border-black bg-blue-100" required placeholder={profile?.username ?? ""} />
 						</div>
 						<div className="flex flex-col gap-1 max-w-md">
 							<label className="uppercase font-bold font-primary text-sm">Display Name</label>
-							<input {...register("displayName")} type="text" className="px-2 py-1 font-secondary border border-black bg-blue-100" required placeholder={""} />
+							<input {...register("displayName")} type="text" className="px-2 py-1 font-secondary border border-black bg-blue-100" required placeholder={profile?.display_name ?? ""} />
 						</div>
-						<button type="submit" className="font-primary w-min px-4 py-2 mt-4 text-bgColor bg-primary font-bold uppercase text-sm">Submit</button>
 					</>
 					}
-				</form>
+				</div>
 			</div>
 
-		</div>
+		</form>
 	);
 }

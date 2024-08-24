@@ -130,14 +130,31 @@ export const createProfile = cache(async (data: UserProfile) => {
 	return data as UserProfile;
 })
 
-export async function getLoginProfile() {
-	const { data: { user }, error } = await supabase.auth.getUser();
-	if (error) { console.error(error) }
-	if (!user) { return null; }
+export const updateProfile = cache(async (data: Partial<UserProfile>) => {
+	const session = await restoreSession();
+	
+	if (!session) {
+		throw new Error("Session is not valid - can't update profile.")
+	}
 
-	const profile = await getProfile(user.id)
+	const { error } = await supabase
+		.from("user-profiles")
+		.update(data)
+		.eq("id", session.user.id);
+
+	if (error) {
+		console.error(error);
+	}
+})
+
+
+export async function getLoginProfile() {
+	const session = await restoreSession();
+	if (!session) { return null; }
+
+	const profile = await getProfile(session.user.id)
 	if (!profile) {
-		const username = (user.email ? user.email.split("@")[0] : "newuser") + (Math.random() * 1000).toString();
+		const username = (user.email ? user.email.split("@")[0] : "newuser") + (Math.floor(Math.random() * 1000)).toString();
 		return createProfile({
 			id: user.id,
 			username,

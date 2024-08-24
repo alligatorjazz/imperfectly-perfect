@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { FollowingPanel } from "../../../components/FollowingPanel";
 
 export const metadata: Metadata = {
 	title: 'PI.FYI | Friends',
@@ -7,7 +8,6 @@ export const metadata: Metadata = {
 
 export default function Following() {
 	return (
-		<div></div>
-		// <SortableFeed />
+		<FollowingPanel />
 	);
 }
