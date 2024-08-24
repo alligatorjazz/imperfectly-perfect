@@ -8,7 +8,7 @@ export function useUserPosts(profile: UserProfile | undefined) {
 	useEffect(() => {
 		if (profile && !posts) {
 			setPosts("loading");
-			getPostsBy(profile.id)
+			getPostsBy(profile.id, {})
 				.then(result => {
 					if (result)
 						setPosts(result);
