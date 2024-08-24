@@ -6,8 +6,6 @@ import { getPosts } from '../lib/api';
 
 export async function WhatsHot() {
 	const posts = await getPosts({
-		after: faker.date.recent(),
-		limit: 20,
 		original: true
 	});
 

@@ -34,7 +34,7 @@ export async function restoreSession() {
 
 
 export async function followAccount(id: string) {
-	const profile = await getLoginProfile()
+	const profile = await getLoginProfile();
 	if (!profile) {
 		return logout();
 	}
@@ -88,7 +88,7 @@ export const getPosts = cache(async (params?: {
 
 export const getPostsBy = cache(async (id: string) => {
 	await restoreSession();
-	
+
 	const { data, error } = await supabase
 		.from("posts")
 		.select(`*`)
@@ -104,6 +104,17 @@ export const getPostsBy = cache(async (id: string) => {
 	) as UserPost[] | null;
 });
 
+export const createPost = cache(async (post: UserPost) => {
+	await restoreSession();
+
+	const { error } = await supabase
+		.from("posts")
+		.insert(post);
+
+	if (error) {
+		console.error(error);
+	}
+});
 
 export const getProfile = cache(async (id: string) => {
 	await restoreSession();
@@ -147,13 +158,13 @@ export const createProfile = cache(async (data: UserProfile) => {
 	}
 
 	return data as UserProfile;
-})
+});
 
 export const updateProfile = cache(async (data: Partial<UserProfile>) => {
 	const session = await restoreSession();
 
 	if (!session) {
-		throw new Error("Session is not valid - can't update profile.")
+		throw new Error("Session is not valid - can't update profile.");
 	}
 
 	const { error } = await supabase
@@ -164,14 +175,14 @@ export const updateProfile = cache(async (data: Partial<UserProfile>) => {
 	if (error) {
 		console.error(error);
 	}
-})
+});
 
 
 export async function getLoginProfile() {
 	const session = await restoreSession();
 	if (!session) { return null; }
 	const { user } = session;
-	const profile = await getProfile(session.user.id)
+	const profile = await getProfile(session.user.id);
 	if (!profile) {
 		const username = (user.email ? user.email.split("@")[0] : "newuser") + (Math.floor(Math.random() * 1000)).toString();
 		return createProfile({
@@ -181,7 +192,7 @@ export async function getLoginProfile() {
 			following: [],
 			blocked: [],
 			created_at: new Date().toISOString()
-		})
+		});
 	}
 
 	return profile;

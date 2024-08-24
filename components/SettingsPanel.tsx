@@ -34,14 +34,14 @@ export function SettingsPanel({ className, ...props }: HTMLAttributes<HTMLDivEle
 		if (profile) {
 			const newUrl = prompt([
 				"Paste a photo url here: "
-			].join("\n"))
-			
+			].join("\n"));
+
 			if (newUrl) {
 				await updateProfile({ avatar: newUrl });
 				window.location.reload();
 			}
 		}
-	}
+	};
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
 			<div className="flex gap-2 mb-4">
@@ -52,7 +52,10 @@ export function SettingsPanel({ className, ...props }: HTMLAttributes<HTMLDivEle
 				<div className="flex flex-col gap-3">
 					{profile && <>
 						<div className="flex flex-col gap-1 max-w-md">
-							<label className="uppercase font-bold font-primary text-sm">Screen Name - <span className="italic">Peasants Permitted</span></label>
+							<label className="uppercase font-bold font-primary text-sm">
+								Screen Name -
+								<span className="italic">Peasants Permitted</span>
+							</label>
 							<input {...register("username")} type="text" className="px-2 py-1 font-secondary  border border-black bg-blue-100" required placeholder={profile?.username ?? ""} />
 						</div>
 						<div className="flex flex-col gap-1 max-w-md">

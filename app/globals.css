@@ -10,6 +10,10 @@
 	--fg-color: rgb(226, 232, 240);
 	--text-color: black;
 	--accent: rgb(255, 255, 0);
+
+	--font-primary: "Arial Narrow", sans-serif;
+	--font-secondary: "Arial", sans-serif;
+	--font-content: "Times New Roman", serif;
 }
 
 @media (prefers-color-scheme: dark) {
