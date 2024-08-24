@@ -3,6 +3,7 @@ import { cache } from "react";
 import { createClient, User } from '@supabase/supabase-js';
 import { Editorial, UserPost, UserProfile } from "../types";
 import dayjs, { Dayjs } from "dayjs";
+import { v4 } from "uuid";
 
 const supabase = createClient('https://gujhjoklpwgyemsvomlj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1amhqb2tscHdneWVtc3ZvbWxqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjQzNjg5NDEsImV4cCI6MjAzOTk0NDk0MX0.7_e-BQXRLkDjP8fbpnP6TVyPlSsi6ItAX0WTJUyHdxQ');
 
@@ -213,4 +214,32 @@ export const getEditorials = cache(async () => {
 
 	return data as Editorial[] | null;
 });
+
+export async function uploadFile(fileData: string | ArrayBuffer, contentType?: string) {
+	await restoreSession();
+	const { data, error } = await supabase
+		.storage
+		.from("anon")
+		.upload(`upload/${v4()}.png`, fileData, {
+			cacheControl: '3600',
+			upsert: false,
+			contentType
+		});
+
+	if (error) {
+		console.error(error);
+	}
+
+	return data;
+}
+
+export async function getPublicUrl(fullPath: string) {
+	await restoreSession();
+	const { data } = supabase.storage
+		.from("anon")
+		.getPublicUrl(fullPath);
+	
+	return data.publicUrl;
+}
+
 

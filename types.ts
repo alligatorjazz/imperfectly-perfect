@@ -5,8 +5,8 @@ export type UserPost = {
 	id: string,
 	headline: string,
 	body?: string,
-	image?: string
-	link?: string
+	image?: string | null;
+	link?: string | null;
 	emoji?: Emoji
 	created_at: string,
 	author: string,

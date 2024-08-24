@@ -104,7 +104,15 @@ export function PostList({ posts }: Props) {
 							{/* body */}
 							{post.body && <p className="font-content text-xl mb-4 leading-6">{post.body}</p>}
 							{/* author & timestamp */}
-							{/* TODO: implement user fetching */}
+							{post.image && <div className="p-4 max-h-[33vh] w-fill overflow-hidden mb-8">
+								<Image 
+									src={post.image}
+									width={160 * 3}
+									height={90 * 3}
+									alt={post.headline}
+									className="object-contain"
+								/>
+							</div>}
 							<a className="flex justify-between items-center gap-2" href={author ? getProfileLink(author.id) : "/404"}>
 								<Image
 									src={author?.avatar ?? "/img/dummy-avatar.avif"}
