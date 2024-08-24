@@ -25,6 +25,7 @@ export function EmojiSelector({ emoji, setEmoji, ...props }: Props) {
 				width={"auto"}
 			/>}
 			onClick={() => setPickerOpen(prev => !prev)}
+			onBlur={() => setPickerOpen(false)}
 			className="hover:cursor-pointer"
 			show={showTooltip}
 			{...props}

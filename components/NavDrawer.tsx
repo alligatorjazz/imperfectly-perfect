@@ -13,7 +13,7 @@ interface Props {
 export function NavDrawer({ active, setActive, links }: Props) {
 	return (
 		<div
-			className="fixed top-0 left-0 w-screen h-screen z-10 bg-bgColor"
+			className="fixed top-0 left-0 w-screen h-screen z-40 bg-bgColor"
 			style={active ? {} : { display: "none" }}
 		>
 			<div className="px-7 py-4 flex justify-between items-center">
