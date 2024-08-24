@@ -9,7 +9,7 @@ import { Button } from './Button';
 import { EmojiSelector } from './EmojiSelector';
 import { v4 } from "uuid";
 import { useLoginId } from '../hooks/useLoginId';
-import { createPost, login } from '../lib/api';
+import { createPost, getPost, login } from '../lib/api';
 import { useFileUpload } from '../hooks/useFileUpload';
 import Image from 'next/image';
 import { IconButton } from './IconButton';
@@ -46,8 +46,12 @@ export function PostInput() {
 			};
 
 			createPost(postData)
-				.then(() => window.location.reload())
-				.catch(err => console.error(err));
+				.catch(err => console.error(err))
+				.finally(() => getPost(postData.id).then(remote => {
+					if (remote?.id == postData.id) {
+						window.location.reload();
+					}
+				}));
 		} else if (!isValid) {
 			console.error(errors);
 			alert("Couldn't post: \n" + Object.values(errors).join("\n"));
