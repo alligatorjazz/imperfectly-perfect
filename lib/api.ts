@@ -65,20 +65,21 @@ export const getPost = cache(async (id: string) => {
 });
 
 export const getPosts = cache(async (params?: {
-	// before?: Date,
-	// after?: Date,
+	before?: Date,
+	after?: Date,
 	// about?: Emoji,
 	// with?: "link" | "image",
 	// contains?: string[],
-	// limit?: number,
+	limit?: number,
 	original?: boolean
 }) => {
 	await restoreSession();
 	const { data, error } = await supabase
 		.from("posts")
 		.select(`*`)
-		.gte("created_at", dayjs().subtract(1, "week"))
-		.limit(100);
+		.lte("created_at", params?.before ?? dayjs())
+		.gte("created_at", params?.after ?? dayjs().subtract(1, "week"))
+		.limit(params?.limit ?? 100);
 
 	if (error) {
 		console.error(error);
