@@ -33,18 +33,20 @@ export function SettingsPanel({ className, ...props }: HTMLAttributes<HTMLDivEle
 	const changePhoto = async () => {
 		if (profile) {
 			const newUrl = prompt([
-				"Yes, I know it's crude, but I don't know how long you guys are hiring and I wanted to get this out before it was too late.",
 				"Paste a photo url here: "
 			].join("\n"))
-			await updateProfile({ avatar: newUrl ?? profile.avatar });
-			window.location.reload();
+			
+			if (newUrl) {
+				await updateProfile({ avatar: newUrl });
+				window.location.reload();
+			}
 		}
 	}
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
 			<div className="flex gap-2 mb-4">
 				<button type="submit" className="font-primary font-bold px-3 py-2 text-xs uppercase bg-primary text-bgColor">Save Changes</button>
-				<button className="font-primary font-bold px-3 py-2 text-xs uppercase border border-primary text-primary">Change Photo</button>
+				<button onClick={changePhoto} type="button" className="font-primary font-bold px-3 py-2 text-xs uppercase border border-primary text-primary">Change Photo</button>
 			</div>
 			<div className="py-4 border-y border-y-textColor border-dashed">
 				<div className="flex flex-col gap-3">

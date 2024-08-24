@@ -1,22 +1,24 @@
 "use client";
-import router from "next/router";
-import { useState, useEffect } from "react";
-import { getLoginProfile, getPosts } from "../lib/api";
+import { useEffect, useState } from "react";
+import { getPostsBy } from "../lib/api";
 import { UserPost, UserProfile } from "../types";
 
 export function useUserPosts(profile: UserProfile | undefined) {
-	const [posts, setPosts] = useState<UserPost[]>();
+	const [posts, setPosts] = useState<UserPost[] | "loading" | null>();
 	useEffect(() => {
 		if (profile && !posts) {
-			getPosts()
+			setPosts("loading");
+			getPostsBy(profile.id)
 				.then(result => {
-					setPosts(result ?? [])
+					if (result)
+						setPosts(result);
+					else 
+						console.warn(`Couldn't get posts for user @${profile.username}.`);
 				}).catch(err => {
 					console.error(err);
-					router.push("/");
-				})
+				});
 		}
-	}, [profile, posts])
+	}, [posts, profile]);
 
 	return posts;
 }

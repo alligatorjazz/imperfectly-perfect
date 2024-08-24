@@ -65,13 +65,12 @@ export const getPost = cache(async (id: string) => {
 });
 
 export const getPosts = cache(async (params?: {
-	before?: Date,
-	after?: Date,
-	by?: string,
-	about?: Emoji,
-	with?: "link" | "image",
-	contains?: string[],
-	limit?: number,
+	// before?: Date,
+	// after?: Date,
+	// about?: Emoji,
+	// with?: "link" | "image",
+	// contains?: string[],
+	// limit?: number,
 	original?: boolean
 }) => {
 	await restoreSession();
@@ -87,13 +86,33 @@ export const getPosts = cache(async (params?: {
 	return data?.sort((a: UserPost, b: UserPost) => dayjs(a.created_at).isBefore(b.created_at) ? 1 : -1)?.filter((post: UserPost) => !post.repost || !params?.original) as UserPost[] | null;
 });
 
+export const getPostsBy = cache(async (id: string) => {
+	await restoreSession();
+	
+	const { data, error } = await supabase
+		.from("posts")
+		.select(`*`)
+		.eq("author", id)
+		.limit(100);
+
+	if (error) {
+		console.error(error);
+	}
+
+	return data?.sort(
+		(a: UserPost, b: UserPost) => dayjs(a.created_at).isBefore(b.created_at) ? 1 : -1
+	) as UserPost[] | null;
+});
+
 
 export const getProfile = cache(async (id: string) => {
 	await restoreSession();
+	// console.log("fetching profile with id ", id);
 	const { data, error } = await supabase
 		.from("user-profiles")
 		.select("*")
 		.eq("id", id)
+		.limit(1)
 		.single();
 
 	if (error && error.code != "PGRST116") {
@@ -132,7 +151,7 @@ export const createProfile = cache(async (data: UserProfile) => {
 
 export const updateProfile = cache(async (data: Partial<UserProfile>) => {
 	const session = await restoreSession();
-	
+
 	if (!session) {
 		throw new Error("Session is not valid - can't update profile.")
 	}
@@ -151,12 +170,12 @@ export const updateProfile = cache(async (data: Partial<UserProfile>) => {
 export async function getLoginProfile() {
 	const session = await restoreSession();
 	if (!session) { return null; }
-
+	const { user } = session;
 	const profile = await getProfile(session.user.id)
 	if (!profile) {
 		const username = (user.email ? user.email.split("@")[0] : "newuser") + (Math.floor(Math.random() * 1000)).toString();
 		return createProfile({
-			id: user.id,
+			id: "user:" + user.id,
 			username,
 			display_name: username,
 			following: [],

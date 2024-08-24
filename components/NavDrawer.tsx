@@ -17,7 +17,7 @@ export function NavDrawer({ active, setActive, links }: Props) {
 			style={active ? {} : { display: "none" }}
 		>
 			<div className="px-7 py-4 flex justify-between items-center">
-				<a href="/">
+				<a href="/home">
 					<Logo scale={1.5} />
 				</a>
 				<div className="p-1 rounded-md transition-all hover:cursor-pointer hover:backdrop-brightness-90" onClick={() => setActive(false)}>

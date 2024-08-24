@@ -1,19 +1,22 @@
 "use client";
 import dayjs from "dayjs";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useEffect } from "react";
+import { useProfile } from "../hooks/useProfile";
+import { useUserPosts } from "../hooks/useUserPosts";
 import { Header } from "./Header";
 import { PostList } from "./PostList";
-import { useLoginProfile } from "../hooks/useLoginProfile";
-import { getPosts } from "../lib/api";
-import { useUserPosts } from "../hooks/useUserPosts";
 
-export function ProfilePanel({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-	const profile = useLoginProfile();
+export function ProfilePanel({ className, profileId, ...props }: HTMLAttributes<HTMLDivElement> & { profileId?: string }) {
+	const profile = useProfile(profileId);
 	const posts = useUserPosts(profile);
 
+	useEffect(() => {
+		console.log("profile posts:", profile, posts);
+	}, [posts, profile]);
+
 	return (
-		<div >
-			<Header level={1} className="text-8xl w-full text-center mb-4">{"@" + (profile?.username ?? "notfound")}</Header>
+		<div>
+			<Header level={1} className="text-7xl w-full text-center mb-4 block whitespace-nowrap text-ellipsis">{"@" + (profile?.username ?? "notfound")}</Header>
 			<div className="border-b border-dashed py-4 border-textColor mb-8">
 				<div className="flex justify-between uppercase text-sm font-bold">
 					<p>Joined</p>
@@ -21,10 +24,14 @@ export function ProfilePanel({ className, ...props }: HTMLAttributes<HTMLDivElem
 				</div>
 				<div className="flex justify-between uppercase text-sm font-bold">
 					<p>Following</p>
-					<p className="underline decoration-dashed decoration-slate-400">{profile?.following.length ?? 0} People</p>
+					<p className="underline decoration-dashed decoration-slate-400">
+						{profile?.following?.length ?? 0}
+						{' '}
+						People
+					</p>
 				</div>
 			</div>
-			{profile && posts && posts.length > 0 ? <PostList posts={posts} /> : <h1 className="text-xl uppercase text-center">No Posts Yet.</h1>}
+			{posts && Array.isArray(posts) && posts?.length > 0 ? <PostList posts={posts} /> : <h1 className="text-xl uppercase text-center">No Posts Yet.</h1>}
 		</div>
 	);
 }

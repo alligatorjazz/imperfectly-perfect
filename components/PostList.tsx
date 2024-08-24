@@ -1,5 +1,6 @@
+"use client";
 import { FiBookmark, FiMoreHorizontal } from "react-icons/fi";
-import { UserPost } from "../types";
+import { UserPost, UserProfile } from "../types";
 import Image from "next/image";
 import { CommentsIcon } from "./CommentsIcon";
 import { faker } from "@faker-js/faker";
@@ -7,6 +8,9 @@ import { IconButton } from "./IconButton";
 import { getPost, getProfile } from "../lib/api";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { getProfileLink } from "../lib/utils";
+import { useEffect, useState } from "react";
+
 dayjs.extend(relativeTime);
 
 interface Props {
@@ -14,32 +18,76 @@ interface Props {
 }
 
 export function PostList({ posts }: Props) {
+	const [authors, setAuthors] = useState<{ [id: string]: UserProfile }>({});
+	const [reposters, setReposters] = useState<{ [id: string]: UserProfile }>({});
+	const [originals, setOriginals] = useState<{ [id: string]: UserPost }>({});
+
+	useEffect(() => {
+		for (const post of posts) {
+			// set authors
+			getProfile(post.author)
+				.then(profile => {
+					if (profile) { setAuthors(prev => ({ ...prev, [post.id]: profile })); }
+					else {
+						console.warn("Couldn't get author profile for post ", post.id);
+					}
+				}).catch(err => console.error(err));
+
+			if (post.repost) {
+				// get original post
+				getPost(post.repost)
+					.then(original => {
+						if (original && post.repost) {
+							setOriginals(prev => ({ ...prev, [post.repost as string]: original }));
+							// get original author
+							getProfile(original.author)
+								.then(author => {
+									if (author) { setAuthors(prev => ({ ...prev, [post.id]: author })); }
+									else {
+										console.warn("Couldn't get original author profile for post ", post.id);
+									}
+								})
+								.catch(err => console.error(err));
+
+						} else {
+							console.warn("Couldn't get original post for ", post.id);
+						}
+					})
+					.catch(err => console.error(err));
+				// get reposter profile
+				getProfile(post.author)
+					.then(profile => {
+						if (profile) { setReposters(prev => ({ ...prev, [post.id]: profile })); }
+						else {
+							console.warn("Couldn't get reposter profile for post ", post.id);
+						}
+					})
+					.catch(err => console.error(err));
+			}
+		}
+	}, [posts]);
+
 	return (
 		<div className="flex flex-col gap-4">
-			{posts.map(async data => {
-				const replies = Math.random() > 0.3 ? undefined : faker.number.int({ min: 1, max: 15 });
-				const post = data.repost ? await getPost(data.repost) : data;
+			{posts.map(data => {
+				const replies = 2;
+				const post = data.repost ? originals[data.id] : data;
 				if (!post) {
-					console.error(`Couldn't load data for post:\n${data}.`);
 					return null;
 				}
-				const author = await getProfile(post.author);
-				const reposter = data.repost ? await getProfile(data.author) : null;
 
-				if (!author) {
-					console.error(`Author not found for post: `, data);
-					console.log(await getProfile(data.author));
-				}
+				const author = authors[post.id];
+				const reposter = data.repost ? reposters[data.id] : null;
 
 				return (
-					<div className="flex flex-col border border-dashed border-textColor" key={post.created_at + post.headline}>
+					<div className="flex flex-col border border-dashed border-textColor" key={post.id}>
 						{/* post content */}
 						<div className="flex flex-col p-4">
 							{/* top row */}
 							<div className="flex justify-between items-center gap-2 mb-4">
 								<div className="text-3xl">{post.emoji ?? "⭐️"}</div>
 								{/* TODO: reposter details */}
-								{reposter && <div className="flex flex-1 gap-1 text-xs opacity-40">
+								{reposter && <a href={getProfileLink(reposter.id)} className="flex flex-1 gap-1 text-xs opacity-40">
 									<Image
 										src={reposter.avatar ?? "/img/dummy-avatar.avif"}
 										width={16}
@@ -48,7 +96,7 @@ export function PostList({ posts }: Props) {
 										className="w-4 h-4"
 									/>
 									<p className="font-bold italic uppercase">{"Re-Rec'd by @" + reposter.username}</p>
-								</div>}
+								</a>}
 								<FiMoreHorizontal size={24} />
 							</div>
 							{/* headline */}
@@ -57,7 +105,7 @@ export function PostList({ posts }: Props) {
 							{post.body && <p className="font-content text-xl mb-4 leading-6">{post.body}</p>}
 							{/* author & timestamp */}
 							{/* TODO: implement user fetching */}
-							<div className="flex justify-between items-center gap-2">
+							<a className="flex justify-between items-center gap-2" href={author ? getProfileLink(author.id) : "/404"}>
 								<Image
 									src={author?.avatar ?? "/img/dummy-avatar.avif"}
 									alt={`${author?.username}'s avatar.`}
@@ -72,7 +120,7 @@ export function PostList({ posts }: Props) {
 											dayjs(post.created_at).fromNow()
 									}
 								</p>
-							</div>
+							</a>
 
 						</div>
 						{/* post actions */}

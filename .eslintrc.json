@@ -1,8 +1,18 @@
 {
-	"extends": "next/core-web-vitals",
-	"plugins": ["react"],
+	"extends": [
+		"next/core-web-vitals",
+		"plugin:react-hooks/recommended"
+	],
+	"plugins": [
+		"react"
+	],
 	"rules": {
 		"semi": "warn",
-		"react/jsx-one-expression-per-line": ["error", {"allow": "single-child"}]
+		"react/jsx-one-expression-per-line": [
+			"error",
+			{
+				"allow": "single-child"
+			}
+		]
 	}
 }

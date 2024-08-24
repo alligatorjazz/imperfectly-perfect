@@ -8,7 +8,7 @@ function randomFrom(array) {
 const dummyUsers = [];
 for (let i = 0; i < 200; i++) {
 	dummyUsers.push({
-		id: "user:" + randomUUID(),
+		id: randomUUID(),
 		username: faker.word.words(2).split(" ").join(""),
 		display_name: faker.person.firstName(),
 		following: i > 0 ? new Array(Math.floor(30 * Math.random())).fill(null).map(() => randomFrom(dummyUsers).id) : [],
@@ -20,7 +20,7 @@ for (let i = 0; i < 200; i++) {
 const dummyPosts = [];
 for (let i = 0; i < 1000; i++) {
 	const post = (Math.random() > 0.4 && i > 0) ? {
-		id: "repost:" + randomUUID(),
+		id: randomUUID(),
 		headline: faker.lorem.sentence(),
 		body: undefined,
 		image: undefined,
@@ -30,7 +30,7 @@ for (let i = 0; i < 1000; i++) {
 		repost: randomFrom(dummyPosts.filter(post => !post.reRec)).id,
 		author: randomFrom(dummyUsers).id
 	} : {
-		id: "post:" + randomUUID(),
+		id: randomUUID(),
 		headline: faker.lorem.sentence(),
 		body: Math.random() > 0.5 ? [faker.lorem.paragraph({ min: 1, max: 3 }), faker.lorem.paragraph({ min: 1, max: 3 })].join("\n") : undefined,
 		image: Math.random() > 0.8 ? faker.image.urlLoremFlickr() : undefined,
@@ -47,7 +47,7 @@ for (let i = 0; i < 1000; i++) {
 const dummyEditorials = [];
 for (let i = 0; i < 20; i++) {
 	const editorial = {
-		id: "editorial:" + randomUUID(),
+		id: randomUUID(),
 		guest: faker.person.fullName(),
 		created_at: faker.date.past({ years: 1 }).toISOString(),
 		cover: faker.image.urlPlaceholder({ width: 128, height: 128 }),

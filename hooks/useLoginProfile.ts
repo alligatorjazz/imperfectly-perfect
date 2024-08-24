@@ -1,22 +1,12 @@
 "use client";
-import router from "next/router";
-import { useState, useEffect } from "react";
-import { getLoginProfile } from "../lib/api";
-import { UserProfile } from "../types";
+import { useRouter } from "next/navigation";
+import { useLoginId } from "./useLoginId";
+import { useProfile } from "./useProfile";
 
 export function useLoginProfile() {
-	const [profile, setProfile] = useState<UserProfile>();
-	useEffect(() => {
-		if (!profile) {
-			getLoginProfile()
-				.then(result => {
-					result ? setProfile(result) : router.push("/")
-				}).catch(err => {
-					console.error(err);
-					router.push("/");
-				})
-		}
-	}, [profile])
+	const router = useRouter();
+	const loginId = useLoginId();
+	const profile = useProfile(loginId);
 
 	return profile;
 }

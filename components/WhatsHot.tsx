@@ -13,7 +13,7 @@ export async function WhatsHot() {
 
 	return (
 		<div>
-			<Header level={1} className="text-5xl w-full text-center py-8">{"What's hot?"}</Header>
+			<Header level={1} className="text-5xl w-full text-center py-8">{"What's hot!"}</Header>
 			{posts && <PostList posts={posts} />}
 		</div>
 	);
