@@ -1,17 +1,15 @@
 "use client";
 import dayjs from "dayjs";
-import { FiLink, FiMoreHorizontal, FiBookmark } from "react-icons/fi";
-import { getProfileLink } from "../lib/utils";
-import { UserPost, UserProfile } from "../types";
-import { CommentsIcon } from "./CommentsIcon";
-import { IconButton } from "./IconButton";
-import { TooltipContainer } from "./TooltipContainer";
-import { useEffect, useState } from "react";
-import { getProfile, getPost, postAndRefresh, deletePost } from "../lib/api";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { FiLink, FiMoreHorizontal } from "react-icons/fi";
 import { v4 } from "uuid";
 import { useLoginId } from "../hooks/useLoginId";
-import Link from "next/link";
+import { deletePost, getPost, getProfile, postAndRefresh } from "../lib/api";
+import { getProfileLink } from "../lib/utils";
+import { UserPost, UserProfile } from "../types";
+import { TooltipContainer } from "./TooltipContainer";
 
 interface Props {
 	post: UserPost
@@ -23,7 +21,9 @@ export function PostCard({ post: data, id }: Props) {
 	const [reposter, setReposter] = useState<UserProfile>();
 	const [original, setOriginal] = useState<UserPost>();
 	const [showMenu, setShowMenu] = useState(false);
-
+	
+	
+	
 	const post = data.repost ? original : data;
 
 	useEffect(() => {
@@ -79,9 +79,9 @@ export function PostCard({ post: data, id }: Props) {
 				<div className="flex flex-col p-4">
 					{/* top row */}
 					<div className="flex justify-between items-center gap-2 mb-4">
-						<div className="text-3xl">{post.emoji ?? "⭐️"}</div>
+						<div className="text-3xl select-none">{post.emoji ?? "⭐️"}</div>
 						<div className="flex flex-1 gap-4 items-center">
-							{post.link && <a href={post.link}><FiLink size={24} color="blue" /></a>}
+							{post.link && <a target="_blank" href={post.link}><FiLink size={24} color="blue" /></a>}
 							{reposter && <Link href={getProfileLink(reposter.id)} className="flex flex-1 gap-1 text-xs opacity-40">
 								<Image
 									src={reposter.avatar ?? "/img/dummy-avatar.avif"}

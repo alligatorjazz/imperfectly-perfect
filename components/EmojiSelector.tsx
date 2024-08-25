@@ -3,6 +3,7 @@ import EmojiPicker from "emoji-picker-react";
 import { Emoji } from "emoji-type";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { TooltipContainer, TooltipContainerProps } from "./TooltipContainer";
+import { useClickOutside } from "../hooks/useClickOutside";
 
 interface Props extends Omit<TooltipContainerProps, "tooltip" | "onClick" | "className"> {
 	emoji: Emoji;
@@ -15,17 +16,20 @@ export function EmojiSelector({ emoji, setEmoji, ...props }: Props) {
 	useEffect(() => {
 		setShowTooltip(pickerOpen);
 	}, [pickerOpen]);
-	
+
+	const closeOnClick = useClickOutside<HTMLDivElement>(() => setPickerOpen(false));
+
 	return (
 		<TooltipContainer
-			tooltip={<EmojiPicker
-				open={pickerOpen}
-				onEmojiClick={({ emoji: newEmoji }) => setEmoji(newEmoji as Emoji)}
-				className={showTooltip ? "" : "opacity-0 w-1/3 max-w-md"}
-				width={"auto"}
-			/>}
+			tooltip={<div ref={closeOnClick}>
+				<EmojiPicker
+					open={pickerOpen}
+					onEmojiClick={({ emoji: newEmoji }) => setEmoji(newEmoji as Emoji)}
+					className={showTooltip ? "" : "opacity-0 w-1/3 max-w-md"}
+					width={"auto"}
+				/>
+			</div>}
 			onClick={() => setPickerOpen(prev => !prev)}
-			onBlur={() => setPickerOpen(false)}
 			className="hover:cursor-pointer"
 			show={showTooltip}
 			{...props}

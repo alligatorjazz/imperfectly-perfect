@@ -1,17 +1,17 @@
 "use client";
 import { Emoji } from 'emoji-type';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FiAlertTriangle, FiImage, FiLink, FiTrash } from 'react-icons/fi';
 import TextareaAutosize from 'react-textarea-autosize';
+import { v4 } from "uuid";
+import { useFileUpload } from '../hooks/useFileUpload';
+import { useLoginId } from '../hooks/useLoginId';
+import { postAndRefresh } from '../lib/api';
 import { UserPost } from '../types';
 import { Button } from './Button';
 import { EmojiSelector } from './EmojiSelector';
-import { v4 } from "uuid";
-import { useLoginId } from '../hooks/useLoginId';
-import { createPost, getPost, login, postAndRefresh } from '../lib/api';
-import { useFileUpload } from '../hooks/useFileUpload';
-import Image from 'next/image';
 import { IconButton } from './IconButton';
 
 type Inputs = Pick<UserPost, "headline" | "image" | "link" | "body">
@@ -52,6 +52,7 @@ export function PostInput() {
 		}
 	};
 
+	
 	useEffect(() => {
 		setImage(imageUrl ?? null);
 	}, [imageUrl]);

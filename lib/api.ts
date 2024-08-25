@@ -61,7 +61,7 @@ export async function followAccount(id: string) {
 		.update({ following: updatedFollows });
 
 	if (error) {
-		console.log(error);
+		console.error(error);
 	}
 }
 
@@ -118,7 +118,7 @@ export const getPosts = cache(async (params?: GetPostsParams) => {
 				return true;
 			}
 		}) as UserPost[] | null;
-	console.log(await supabase.from("posts"),);
+	
 	return result;
 });
 
