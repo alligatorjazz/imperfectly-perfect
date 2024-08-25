@@ -52,7 +52,9 @@ export function SettingsPanel({ className, ...props }: HTMLAttributes<HTMLDivEle
 					{profile && <>
 						<div className="flex flex-col gap-1 max-w-md">
 							<label className="uppercase font-bold font-primary text-sm">
-								Screen Name -
+								Screen Name - 
+{' '}
+{" "}
 								<span className="italic">Peasants Permitted</span>
 							</label>
 							<input {...register("username")} type="text" className="px-2 py-1 font-secondary  border border-black bg-blue-100" required placeholder={profile?.username ?? ""} />
