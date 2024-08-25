@@ -21,9 +21,9 @@ export function PostCard({ post: data, id }: Props) {
 	const [reposter, setReposter] = useState<UserProfile>();
 	const [original, setOriginal] = useState<UserPost>();
 	const [showMenu, setShowMenu] = useState(false);
-	
-	
-	
+
+
+
 	const post = data.repost ? original : data;
 
 	useEffect(() => {
@@ -122,7 +122,11 @@ export function PostCard({ post: data, id }: Props) {
 									</button>
 								</li> */}
 								{(data.author === loginId) && <li className="h-8 w-32 flex justify-center">
-									<button onClick={() => deletePost(data.id).finally(() => window.location.reload())} className="uppercase">Delete</button>
+									<button onClick={() => deletePost(data.id)
+										.then(result => result === true ? window.location.reload() : console.error(result))
+									} className="uppercase">
+										Delete
+									</button>
 								</li>}
 							</ul>}
 							show={showMenu}

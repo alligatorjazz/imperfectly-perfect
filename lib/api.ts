@@ -162,8 +162,10 @@ export const deletePost = cache(async (id: string) => {
 		.eq("id", id);
 
 	if (error && error.code != "PGRST116") {
-		console.error(error);
+		return error;
 	}
+
+	return true;
 });
 
 export const getProfile = cache(async (id: string) => {
