@@ -9,8 +9,8 @@ import { UserPost } from "../types";
 export function WhatsHot() {
 	const [initialPosts, setInitialPosts] = useState<UserPost[]>();
 	useEffect(() => {
-		getPosts({ limit: 25 })
-			.then(posts => posts ? setInitialPosts(posts) : setInitialPosts([]) )
+		getPosts({ limit: 25, original: true })
+			.then(posts => posts ? setInitialPosts(posts) : setInitialPosts([]))
 			.catch(err => console.error(err));
 	}, []);
 	return (

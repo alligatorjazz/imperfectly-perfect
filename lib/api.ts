@@ -106,7 +106,7 @@ export const getPosts = cache(async (params?: GetPostsParams) => {
 	const result = data
 		?.filter((post: UserPost) => {
 			if (params?.original) {
-				return !post.repost;
+				return post.repost ? false : true;
 			} else {
 				return true;
 			}
