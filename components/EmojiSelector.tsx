@@ -17,18 +17,17 @@ export function EmojiSelector({ emoji, setEmoji, ...props }: Props) {
 		setShowTooltip(pickerOpen);
 	}, [pickerOpen]);
 
-	const closeOnClick = useClickOutside<HTMLDivElement>(() => setPickerOpen(false));
-
 	return (
 		<TooltipContainer
-			tooltip={<div ref={closeOnClick}>
+			tooltip={
 				<EmojiPicker
+
 					open={pickerOpen}
 					onEmojiClick={({ emoji: newEmoji }) => setEmoji(newEmoji as Emoji)}
 					className={showTooltip ? "" : "opacity-0 w-1/3 max-w-md"}
 					width={"auto"}
 				/>
-			</div>}
+			}
 			onClick={() => setPickerOpen(prev => !prev)}
 			className="hover:cursor-pointer"
 			show={showTooltip}

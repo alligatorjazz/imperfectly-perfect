@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from "react";
 export function useClickOutside<T extends HTMLElement>(onClickOutside: (e: Event) => void) {
 	const ref = useRef<T>(null);
 	const checkClickOutside = useCallback((e: Event) => {
-		const clickedInside = e.target === ref.current;
+		const clickedInside = e.target === ref.current || ref.current?.contains(e.target);
 		if (!clickedInside) {
 			onClickOutside(e);
 		}
