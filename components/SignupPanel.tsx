@@ -5,6 +5,7 @@ import { HTMLAttributes, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { login, restoreSession, signUp } from "../lib/api";
 import Link from "next/link";
+import { FiAlertTriangle } from "react-icons/fi";
 
 type Inputs = {
 	email: string
@@ -33,12 +34,19 @@ export function SignupPanel({ className, ...props }: HTMLAttributes<HTMLDivEleme
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		setLocked(true);
-		const { user } = await signUp(data.email, data.password as string);
-		if (user) {
-			router.push("/home");
-		} else {
-			setError("root", { message: "Your signup didn't go through - maybe you have another account?" });
+		try {
+			const { success, error } = await signUp(data.email, data.password as string);
+			if (success) {
+				router.push("/home");
+			} else {
+				if (error?.code === "user_already_exists")
+					setError("root", { message: "You already have an account." });
+			}
+		} catch (error) {
+			console.error(error);
+			setError("root", { message: "There was an error with your signup - refresh and try again." });
 		}
+
 		setLocked(false);
 	};
 
@@ -52,6 +60,10 @@ export function SignupPanel({ className, ...props }: HTMLAttributes<HTMLDivEleme
 			/>
 			<p className="uppercase font-bold font-primary text-lg">Sign Up</p>
 			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+				{errors.root && <div className='text-red-500 font-bold text-xs uppercase mb-2 flex items-center gap-1'>
+					<FiAlertTriangle color='red' />
+					<p>{errors.root.message}</p>
+				</div>}
 				<input {...register("email")} type="email" className="px-2 py-1 font-secondary  border border-black bg-blue-100" required placeholder="Email" />
 				<input {...register("password")} type="password" className="px-2 py-1 font-secondary border border-black bg-blue-100" required placeholder="Password" />
 				<button type="submit" className="font-primary w-min px-4 py-2 mt-4 text-bgColor bg-primary font-bold uppercase text-sm">Submit</button>
