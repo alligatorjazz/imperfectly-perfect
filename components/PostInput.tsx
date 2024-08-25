@@ -83,7 +83,7 @@ export function PostInput() {
 				<div className='flex justify-between items-center'>
 					<div className='flex gap-2 items-center'>
 						<EmojiSelector emoji={emoji} setEmoji={setEmoji} />
-						{/* TODO: enable link / image support */}
+				
 						<button type='button' onClick={upload}>
 							<FiImage size={20} color={image ? "blue" : ""} />
 						</button>

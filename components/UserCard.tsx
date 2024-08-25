@@ -20,7 +20,7 @@ export function UserCard({ user }: Props) {
 						{user.username}
 					</Header>
 				</a>
-				{/* TODO: add getRecs function */}
+				
 				<p className="uppercase opacity-40 font-bold text-center">No recs yet..</p>
 				<Image
 					src={faker.image.urlPlaceholder({ width: 128, height: 128 })}

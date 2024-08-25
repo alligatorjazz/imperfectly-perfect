@@ -13,7 +13,7 @@ type Inputs = {
 }
 
 export function SignupPanel({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-	// TODO: loading indicator + input lock when logging in
+	
 	const [locked, setLocked] = useState(false);
 	const router = useRouter();
 	useEffect(() => {

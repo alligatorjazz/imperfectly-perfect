@@ -9,7 +9,7 @@ export function LocalNav({ links, className, ...props }: { links: NavLinks } & H
 	const pathname = usePathname();
 
 	return <nav className={[
-		"flex flex-row justify-between items-center py-3 text-2xl cursor-pointer", className
+		"flex flex-row justify-between items-center py-3 text-xl md:text-2xl cursor-pointer", className
 	].join(" ")} {...props}>
 		{links.map(({ href, title }) => (
 			<Link

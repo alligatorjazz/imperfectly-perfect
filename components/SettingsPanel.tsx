@@ -12,7 +12,6 @@ type Inputs = {
 }
 
 export function SettingsPanel({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-	// TODO: loading indicator + input lock when logging in
 	const profile = useLoginProfile();
 	const router = useRouter();
 	const {
