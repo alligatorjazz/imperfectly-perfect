@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { UserPost } from "../types";
 
 
-export async function WhatsHot() {
+export function WhatsHot() {
 	const [initialPosts, setInitialPosts] = useState<UserPost[]>();
 	useEffect(() => {
 		getPosts({ limit: 25 })
