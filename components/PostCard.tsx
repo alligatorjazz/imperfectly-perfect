@@ -143,7 +143,7 @@ export function PostCard({ post: data, id }: Props) {
 					{/* body */}
 					{post.body && <p className="font-content text-xl mb-4 leading-6">{post.body}</p>}
 					{/* author & timestamp */}
-					{post.image && <div className="p-4 max-h-[33vh] w-fill overflow-hidden mb-8">
+					{post.image && <div className="p-4 w-fill overflow-hidden mb-8">
 						<Image
 							src={post.image}
 							width={160 * 3}
